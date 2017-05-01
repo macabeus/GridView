@@ -1,11 +1,12 @@
-[![Version](https://img.shields.io/cocoapods/v/TvLightSegments.svg?style=flat)](http://cocoapods.org/pods/TvLightSegments)
-[![License](https://img.shields.io/cocoapods/l/TvLightSegments.svg?style=flat)](http://cocoapods.org/pods/TvLightSegments)
-[![Platform](https://img.shields.io/cocoapods/p/TvLightSegments.svg?style=flat)](http://cocoapods.org/pods/TvLightSegments)
+[![Version](https://img.shields.io/cocoapods/v/GridView.svg?style=flat)](http://cocoapods.org/pods/GridView)
+[![License](https://img.shields.io/cocoapods/l/GridView.svg?style=flat)](http://cocoapods.org/pods/GridView)
+[![Platform](https://img.shields.io/cocoapods/p/GridView.svg?style=flat)](http://cocoapods.org/pods/GridView)
 
 # GridView
 📜  Amazing grid view in your tvOS/iOS app
 
 ![](http://i.imgur.com/Zn3c7bD.png)
+![](http://i.imgur.com/0fccFX3.png)
 
 You can download this repository and see this example app.
 
@@ -24,14 +25,14 @@ and use `pod install`.
 ### Storyboard
 ![](http://i.imgur.com/nNbAekE.png)
 
-1. Create a Container View
-2. Change the View Controller for Collection View Controller
-3. Set *GridViewController* as a custom class
+1. Create a *Container View*
+2. Change the *View Controller* for  *Collection View Controller*
+3. Set `GridViewController` as a custom class
 
 ### Create a cell
 
-To display a cell in grid, the cell need be a `UICollectionViewCell` and subscriber the protocol `SlotableCell`.
-And, you need create a xib file with Collection View Cell. The xib, and cell's indentifier in xib file, **need** have the same name of the class.
+To display a cell in grid, the cell need be a `UICollectionViewCell` and subscriber the protocol `SlotableCell`.<br>
+And, you need create a xib file with *Collection View Cell*. The xib, and cell's indentifier in xib file, **need** have the same name of the class.
 
 Minimal example:
 
@@ -50,7 +51,7 @@ class CellLogs: UICollectionViewCell, SlotableCell {
 }
 ```
 
-When the grid will show the CellLogs, will get the `CellLogs.xib` and run the `load(params)` method.
+When the grid will show the `CellLogs`, will get the `CellLogs.xib` and run the `load(params)` method.
 
 ### Code
 
@@ -64,12 +65,20 @@ extension ViewController: GridViewDelegate {
         // we need register cell's class, then, send it's where 🖋
         
         return [CellLogs.self, CellMap.self]
+        
+        // if do you want list all classes that subscreber the SlotableCell protocol, you can read use this gist: https://gist.github.com/brunomacabeusbr/eea343bb9119b96eed3393e41dcda0c9 💜
     }
     
     func setup(cell: UICollectionViewCell, params: [String: Any]) {
         // this delegate is called in "collectionView(_:cellForItemAt)" from GridViewController
         // it's useful when we need to setup many cells with same code 🍡
         
+        // for example, connect to server, if a cell need
+        if let cellRealTime = cell as? CellRealTimeProtocol {
+            cellRealTime.connect()
+        }
+        
+        // layout
         cell.layer.cornerRadius = 10
     }
 }
@@ -106,7 +115,47 @@ class ViewController: UIViewController {
 }
 ```
 
-To understand how to set `gridConfiguration` correctly, read the section "How GridView work?".
+To understand how to set layout with `gridConfiguration` correctly, read the section "How GridView work?".
+
+### params
+
+When you create a `Slot`, you set a cell of this slot, and also **params** of this slot. For example:
+
+```swift
+Slot(cell: CellCharacter.self, params: ["race": "undead"])
+```
+
+The parameter is passed in two moments:
+* on `GridViewDelegate`, in method `setup(cell: UICollectionViewCell, params: [String: Any])`
+* on `SlotableCell`, in method `load(params: [String: Any])`
+
+Example of use:
+
+```swift
+func load(params: [String: Any]) {
+    let paramRace = params["race"] as? String
+    
+    switch paramRace { // imagens from the amazing open source game Battle for Wesnoth
+    case "undead"?:
+        image.image = UIImage(named: "undead")!
+    case "elves"?:
+        image.image = UIImage(named: "elves")!
+    case "troll"?:
+        image.image = UIImage(named: "troll")!
+    default:
+        print("invalid race: \(paramRace ?? "nil")")
+    }
+}
+```
+
+### How to reload a grid?
+
+If you already a set a value to `gridConfiguration`, and want set a new value, to reload a grid use the method `reloadGrid()`.
+
+```swift
+containerGrid!.gridConfiguration = [ ... ] // new values for my awesome grid
+containerGrid!.reloadGrid() // reload it
+```
 
 # How GridView work?
 
@@ -114,4 +163,5 @@ The GridView **always** show all cells, and set in each cell a proportional size
 
 ![](http://i.imgur.com/Z6G8ymq.png)
 
-When GridView will draw a cell, check if have a enough space in first slot. If have, draw. If haven't, check in the second slot, and so on.
+When GridView will draw a cell, check if have a enough space in first slot. If have, draw. If haven't, check in the second slot, and so on.<br>
+The total of columns is calculated at runtime.
