@@ -67,6 +67,18 @@ public class GridLayout: UICollectionViewLayout {
                 column = 0
                 columnsFill = 0
                 
+                if collectionView!.numberOfItems(inSection: section) > 0 {
+                    // get the first column with free space
+                    while yOffset[columnsFill] > CGFloat(Int(columnRow) * (section + 1)) {
+                        columnsFill += 1
+                    }
+                    column = columnsFill
+                } else {
+                    // if the row don't have a cell
+                    columnsFill = totalColumns
+                }
+                
+                //
                 for item in 0..<collectionView!.numberOfItems(inSection: section) {
                     let indexPath = IndexPath(item: item, section: section)
                     
@@ -111,10 +123,9 @@ public class GridLayout: UICollectionViewLayout {
                     column += slotWidth
                 }
                 
-                // somar todos os elementos de yOffset[coluna..ultimo item]
-                for item in columnsFill..<totalColumns {
-                    yOffset[item] += columnRow + cellPadding
-                }
+                // update yOffset of slots that not receive a cell
+                yOffset = yOffset[0..<columnsFill] +
+                          yOffset[columnsFill..<yOffset.count].map { $0 + columnRow + (cellPadding * 2) }
             }
         }
     }
