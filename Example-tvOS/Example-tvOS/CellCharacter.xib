@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.AppleTV.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="appleTV" orientation="landscape">
+        <adaptation id="dark"/>
+    </device>
+    <dependencies>
+        <deployment identifier="tvOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellCharacter" id="swD-Fa-a1e" customClass="CellCharacter" customModule="Example_tvOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="260" height="244"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="260" height="244"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4DQ-2f-OO6">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="244"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="f6H-gl-a3g">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="244"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.1058823529" green="0.062745098040000002" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="f6H-gl-a3g" firstAttribute="leading" secondItem="swD-Fa-a1e" secondAttribute="leading" id="1JO-Hf-nPR"/>
+                <constraint firstItem="f6H-gl-a3g" firstAttribute="top" secondItem="swD-Fa-a1e" secondAttribute="top" id="3fP-ZQ-Oo4"/>
+                <constraint firstItem="4DQ-2f-OO6" firstAttribute="leading" secondItem="swD-Fa-a1e" secondAttribute="leading" id="CY7-JM-FIJ"/>
+                <constraint firstItem="4DQ-2f-OO6" firstAttribute="top" secondItem="swD-Fa-a1e" secondAttribute="top" id="Dam-kC-pXW"/>
+                <constraint firstAttribute="bottom" secondItem="4DQ-2f-OO6" secondAttribute="bottom" id="RTF-aG-sgc"/>
+                <constraint firstAttribute="trailing" secondItem="f6H-gl-a3g" secondAttribute="trailing" id="WyZ-gN-i6p"/>
+                <constraint firstAttribute="bottom" secondItem="f6H-gl-a3g" secondAttribute="bottom" id="etX-j3-wFZ"/>
+                <constraint firstAttribute="trailing" secondItem="4DQ-2f-OO6" secondAttribute="trailing" id="qH9-Xs-TBq"/>
+            </constraints>
+            <size key="customSize" width="260" height="244"/>
+            <connections>
+                <outlet property="backgroundView" destination="4DQ-2f-OO6" id="f4l-FW-nYF"/>
+                <outlet property="image" destination="f6H-gl-a3g" id="6pl-Rx-CH4"/>
+            </connections>
+            <point key="canvasLocation" x="-576" y="-295"/>
+        </collectionViewCell>
+    </objects>
+</document>

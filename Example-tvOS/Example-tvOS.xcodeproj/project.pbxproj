@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		892FDE9A1EB2152600B1A333 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDE991EB2152600B1A333 /* AppDelegate.swift */; };
+		892FDE9C1EB2152600B1A333 /* MainTvController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDE9B1EB2152600B1A333 /* MainTvController.swift */; };
+		892FDE9F1EB2152600B1A333 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 892FDE9D1EB2152600B1A333 /* Main.storyboard */; };
+		892FDEA11EB2152600B1A333 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 892FDEA01EB2152600B1A333 /* Assets.xcassets */; };
+		892FDF621EB3959E00B1A333 /* CellCharacter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892FDF611EB3959E00B1A333 /* CellCharacter.xib */; };
+		892FDF641EB395B300B1A333 /* CellLogs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892FDF631EB395B300B1A333 /* CellLogs.xib */; };
+		892FDF661EB396A800B1A333 /* CellCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF651EB396A800B1A333 /* CellCharacter.swift */; };
+		892FDF681EB396CD00B1A333 /* CellLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF671EB396CD00B1A333 /* CellLogs.swift */; };
+		892FDF6A1EB3CC2300B1A333 /* CellMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892FDF691EB3CC2300B1A333 /* CellMap.xib */; };
+		892FDF6C1EB3CC4500B1A333 /* CellMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF6B1EB3CC4500B1A333 /* CellMap.swift */; };
+		892FDF6E1EB3DE9100B1A333 /* CellChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF6D1EB3DE9100B1A333 /* CellChart.swift */; };
+		892FDF701EB3DE9D00B1A333 /* CellChart.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892FDF6F1EB3DE9D00B1A333 /* CellChart.xib */; };
+		89D4A7781EB6D6E70006E05D /* ProtocolCellRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D4A7771EB6D6E70006E05D /* ProtocolCellRealTime.swift */; };
+		A52F657142C2419BE8CB666C /* Pods_Example_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CD958C69AD4EC72E1F693D /* Pods_Example_tvOS.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		536EEC1959BF8DAFB43D9F2F /* Pods-Example-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-tvOS.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Example-tvOS/Pods-Example-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		8555ACF6AFB9455CEB797522 /* Pods-Example-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-tvOS.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Example-tvOS/Pods-Example-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		88CD958C69AD4EC72E1F693D /* Pods_Example_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		892FDE961EB2152600B1A333 /* Example-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		892FDE991EB2152600B1A333 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		892FDE9B1EB2152600B1A333 /* MainTvController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTvController.swift; sourceTree = "<group>"; };
+		892FDE9E1EB2152600B1A333 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		892FDEA01EB2152600B1A333 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		892FDEA21EB2152600B1A333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		892FDF391EB23E1E00B1A333 /* GridViewiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridViewiOS.h; sourceTree = "<group>"; };
+		892FDF3A1EB23E1E00B1A333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		892FDF611EB3959E00B1A333 /* CellCharacter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellCharacter.xib; sourceTree = "<group>"; };
+		892FDF631EB395B300B1A333 /* CellLogs.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellLogs.xib; sourceTree = "<group>"; };
+		892FDF651EB396A800B1A333 /* CellCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellCharacter.swift; sourceTree = "<group>"; };
+		892FDF671EB396CD00B1A333 /* CellLogs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellLogs.swift; sourceTree = "<group>"; };
+		892FDF691EB3CC2300B1A333 /* CellMap.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellMap.xib; sourceTree = "<group>"; };
+		892FDF6B1EB3CC4500B1A333 /* CellMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellMap.swift; sourceTree = "<group>"; };
+		892FDF6D1EB3DE9100B1A333 /* CellChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChart.swift; sourceTree = "<group>"; };
+		892FDF6F1EB3DE9D00B1A333 /* CellChart.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellChart.xib; sourceTree = "<group>"; };
+		89D4A7771EB6D6E70006E05D /* ProtocolCellRealTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolCellRealTime.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		892FDE931EB2152600B1A333 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A52F657142C2419BE8CB666C /* Pods_Example_tvOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		892FDE8D1EB2152600B1A333 = {
+			isa = PBXGroup;
+			children = (
+				892FDE981EB2152600B1A333 /* Example-tvOS */,
+				892FDF381EB23E1E00B1A333 /* GridViewiOS */,
+				892FDE971EB2152600B1A333 /* Products */,
+				FE8C3F42BD395E407121D73D /* Pods */,
+				DB1F4469CE8AE1367958B68F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		892FDE971EB2152600B1A333 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				892FDE961EB2152600B1A333 /* Example-tvOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		892FDE981EB2152600B1A333 /* Example-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				892FDE991EB2152600B1A333 /* AppDelegate.swift */,
+				892FDE9B1EB2152600B1A333 /* MainTvController.swift */,
+				892FDF691EB3CC2300B1A333 /* CellMap.xib */,
+				892FDF6B1EB3CC4500B1A333 /* CellMap.swift */,
+				892FDF631EB395B300B1A333 /* CellLogs.xib */,
+				892FDF671EB396CD00B1A333 /* CellLogs.swift */,
+				892FDF6F1EB3DE9D00B1A333 /* CellChart.xib */,
+				892FDF6D1EB3DE9100B1A333 /* CellChart.swift */,
+				892FDF611EB3959E00B1A333 /* CellCharacter.xib */,
+				892FDF651EB396A800B1A333 /* CellCharacter.swift */,
+				89D4A7771EB6D6E70006E05D /* ProtocolCellRealTime.swift */,
+				892FDE9D1EB2152600B1A333 /* Main.storyboard */,
+				892FDEA01EB2152600B1A333 /* Assets.xcassets */,
+				892FDEA21EB2152600B1A333 /* Info.plist */,
+			);
+			path = "Example-tvOS";
+			sourceTree = "<group>";
+		};
+		892FDF381EB23E1E00B1A333 /* GridViewiOS */ = {
+			isa = PBXGroup;
+			children = (
+				892FDF391EB23E1E00B1A333 /* GridViewiOS.h */,
+				892FDF3A1EB23E1E00B1A333 /* Info.plist */,
+			);
+			path = GridViewiOS;
+			sourceTree = "<group>";
+		};
+		DB1F4469CE8AE1367958B68F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88CD958C69AD4EC72E1F693D /* Pods_Example_tvOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE8C3F42BD395E407121D73D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				536EEC1959BF8DAFB43D9F2F /* Pods-Example-tvOS.debug.xcconfig */,
+				8555ACF6AFB9455CEB797522 /* Pods-Example-tvOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		892FDE951EB2152600B1A333 /* Example-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 892FDEA51EB2152600B1A333 /* Build configuration list for PBXNativeTarget "Example-tvOS" */;
+			buildPhases = (
+				A880A6BB8D8244DFFC7F6B7C /* [CP] Check Pods Manifest.lock */,
+				892FDE921EB2152600B1A333 /* Sources */,
+				892FDE931EB2152600B1A333 /* Frameworks */,
+				892FDE941EB2152600B1A333 /* Resources */,
+				01C601B60E40D6D49C53E1EE /* [CP] Embed Pods Frameworks */,
+				75F571E9807DB5A30DC8C41D /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Example-tvOS";
+			productName = "Example-tvOS";
+			productReference = 892FDE961EB2152600B1A333 /* Example-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		892FDE8E1EB2152600B1A333 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Bruno Macabeus Aquino";
+				TargetAttributes = {
+					892FDE951EB2152600B1A333 = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = 56KUK57QCP;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 892FDE911EB2152600B1A333 /* Build configuration list for PBXProject "Example-tvOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 892FDE8D1EB2152600B1A333;
+			productRefGroup = 892FDE971EB2152600B1A333 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				892FDE951EB2152600B1A333 /* Example-tvOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		892FDE941EB2152600B1A333 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				892FDF641EB395B300B1A333 /* CellLogs.xib in Resources */,
+				892FDEA11EB2152600B1A333 /* Assets.xcassets in Resources */,
+				892FDF701EB3DE9D00B1A333 /* CellChart.xib in Resources */,
+				892FDE9F1EB2152600B1A333 /* Main.storyboard in Resources */,
+				892FDF621EB3959E00B1A333 /* CellCharacter.xib in Resources */,
+				892FDF6A1EB3CC2300B1A333 /* CellMap.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01C601B60E40D6D49C53E1EE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Example-tvOS/Pods-Example-tvOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75F571E9807DB5A30DC8C41D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Example-tvOS/Pods-Example-tvOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A880A6BB8D8244DFFC7F6B7C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		892FDE921EB2152600B1A333 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				892FDF681EB396CD00B1A333 /* CellLogs.swift in Sources */,
+				892FDE9C1EB2152600B1A333 /* MainTvController.swift in Sources */,
+				892FDF661EB396A800B1A333 /* CellCharacter.swift in Sources */,
+				89D4A7781EB6D6E70006E05D /* ProtocolCellRealTime.swift in Sources */,
+				892FDE9A1EB2152600B1A333 /* AppDelegate.swift in Sources */,
+				892FDF6E1EB3DE9100B1A333 /* CellChart.swift in Sources */,
+				892FDF6C1EB3CC4500B1A333 /* CellMap.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		892FDE9D1EB2152600B1A333 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				892FDE9E1EB2152600B1A333 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		892FDEA31EB2152600B1A333 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		892FDEA41EB2152600B1A333 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		892FDEA61EB2152600B1A333 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 536EEC1959BF8DAFB43D9F2F /* Pods-Example-tvOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 56KUK57QCP;
+				INFOPLIST_FILE = "Example-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "macabeus.Example-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		892FDEA71EB2152600B1A333 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8555ACF6AFB9455CEB797522 /* Pods-Example-tvOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 56KUK57QCP;
+				INFOPLIST_FILE = "Example-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "macabeus.Example-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		892FDE911EB2152600B1A333 /* Build configuration list for PBXProject "Example-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				892FDEA31EB2152600B1A333 /* Debug */,
+				892FDEA41EB2152600B1A333 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		892FDEA51EB2152600B1A333 /* Build configuration list for PBXNativeTarget "Example-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				892FDEA61EB2152600B1A333 /* Debug */,
+				892FDEA71EB2152600B1A333 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 892FDE8E1EB2152600B1A333 /* Project object */;
+}
