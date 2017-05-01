@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "GridView"
-  s.version      = "0.1.0"
+  s.version      = "0.1.1"
   s.summary      = "Amazing grid view in your tvOS/iOS app"
   s.homepage     = "https://github.com/brunomacabeusbr/GridView"
   s.license      = { :type => "MIT", :file => "LICENSE" }
