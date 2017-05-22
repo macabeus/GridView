@@ -1,15 +1,15 @@
 PODS:
-  - GridView (0.0.1)
+  - GridView (0.1.2)
 
 DEPENDENCIES:
   - GridView (from `.`)
 
 EXTERNAL SOURCES:
   GridView:
-    :path: "."
+    :path: .
 
 SPEC CHECKSUMS:
-  GridView: 941b44e153187dc19564c055eddde516b2a71360
+  GridView: 61b3bd505c142cfc13843bd4209e4a7edca52f0a
 
 PODFILE CHECKSUM: 9a5303cdd141945f46a098a4fcefca5c8e762d94
 

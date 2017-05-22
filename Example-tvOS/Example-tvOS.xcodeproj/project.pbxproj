@@ -33,8 +33,6 @@
 		892FDE9E1EB2152600B1A333 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		892FDEA01EB2152600B1A333 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		892FDEA21EB2152600B1A333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		892FDF391EB23E1E00B1A333 /* GridViewiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridViewiOS.h; sourceTree = "<group>"; };
-		892FDF3A1EB23E1E00B1A333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		892FDF611EB3959E00B1A333 /* CellCharacter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellCharacter.xib; sourceTree = "<group>"; };
 		892FDF631EB395B300B1A333 /* CellLogs.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellLogs.xib; sourceTree = "<group>"; };
 		892FDF651EB396A800B1A333 /* CellCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellCharacter.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				892FDE981EB2152600B1A333 /* Example-tvOS */,
-				892FDF381EB23E1E00B1A333 /* GridViewiOS */,
 				892FDE971EB2152600B1A333 /* Products */,
 				FE8C3F42BD395E407121D73D /* Pods */,
 				DB1F4469CE8AE1367958B68F /* Frameworks */,
@@ -96,15 +93,6 @@
 				892FDEA21EB2152600B1A333 /* Info.plist */,
 			);
 			path = "Example-tvOS";
-			sourceTree = "<group>";
-		};
-		892FDF381EB23E1E00B1A333 /* GridViewiOS */ = {
-			isa = PBXGroup;
-			children = (
-				892FDF391EB23E1E00B1A333 /* GridViewiOS.h */,
-				892FDF3A1EB23E1E00B1A333 /* Info.plist */,
-			);
-			path = GridViewiOS;
 			sourceTree = "<group>";
 		};
 		DB1F4469CE8AE1367958B68F /* Frameworks */ = {
