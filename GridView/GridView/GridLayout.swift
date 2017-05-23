@@ -63,9 +63,12 @@ public class GridLayout: UICollectionViewLayout {
             var column: Int
             let totalColumns = delegate.maxRow()
             var columnsFill: Int
+            var yOffsetMiniumForNewRow: CGFloat = 0
+            
             for section in 0..<collectionView!.numberOfSections {
                 column = 0
                 columnsFill = 0
+                yOffsetMiniumForNewRow += columnRow + cellPadding * 2
                 
                 if collectionView!.numberOfItems(inSection: section) > 0 {
                     // get the first column with free space
@@ -125,7 +128,9 @@ public class GridLayout: UICollectionViewLayout {
                 
                 // update yOffset of slots that not receive a cell
                 yOffset = yOffset[0..<columnsFill] +
-                          yOffset[columnsFill..<yOffset.count].map { $0 + columnRow + (cellPadding * 2) }
+                          yOffset[columnsFill..<yOffset.count].map {
+                              max(yOffsetMiniumForNewRow, $0)
+                          }
             }
         }
     }
