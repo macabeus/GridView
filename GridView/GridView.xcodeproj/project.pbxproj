@@ -10,11 +10,29 @@
 		892FDF5D1EB38E9100B1A333 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */; };
 		892FDF601EB38F9300B1A333 /* GridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5E1EB38F8700B1A333 /* GridController.swift */; };
 		898E4F771EDD05D8006A826B /* GridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4F751EDD05C3006A826B /* GridConfiguration.swift */; };
+		898E4FA51EDEF974006A826B /* GridViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4FA41EDEF974006A826B /* GridViewTests.swift */; };
+		898E4FA71EDEF974006A826B /* GridView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892FDF521EB23F7E00B1A333 /* GridView.framework */; };
+		898E4FAD1EDEFA68006A826B /* GridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5E1EB38F8700B1A333 /* GridController.swift */; };
+		898E4FAE1EDEFA6A006A826B /* GridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4F751EDD05C3006A826B /* GridConfiguration.swift */; };
+		898E4FAF1EDEFA6D006A826B /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */; };
+		F52C3F0C5FCC8D9CB1E10533 /* Pods_GridView_GridViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D72A67026D9466892EF3EDA /* Pods_GridView_GridViewTests.framework */; };
 		F82715807962B75D1008F681 /* Pods_GridView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F805947CD4D71E9436CAAEA /* Pods_GridView.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		898E4FA81EDEF974006A826B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 892FDE771EB214E000B1A333 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 892FDF511EB23F7E00B1A333;
+			remoteInfo = GridView;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		18060E4BDFFCEAAC87A1FE6E /* Pods-GridView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridView.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-GridView/Pods-GridView.debug.xcconfig"; sourceTree = "<group>"; };
+		1B43777C228F1C2065B095A0 /* Pods-GridView-GridViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridView-GridViewTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-GridView-GridViewTests/Pods-GridView-GridViewTests.release.xcconfig"; sourceTree = "<group>"; };
+		1D72A67026D9466892EF3EDA /* Pods_GridView_GridViewTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GridView_GridViewTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F805947CD4D71E9436CAAEA /* Pods_GridView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GridView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1AE834B66A2EA89DAC49A5 /* Pods-GridView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridView.release.xcconfig"; path = "../Pods/Target Support Files/Pods-GridView/Pods-GridView.release.xcconfig"; sourceTree = "<group>"; };
 		892FDE831EB214E000B1A333 /* GridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
@@ -23,7 +41,11 @@
 		892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		892FDF5E1EB38F8700B1A333 /* GridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridController.swift; sourceTree = "<group>"; };
 		898E4F751EDD05C3006A826B /* GridConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridConfiguration.swift; sourceTree = "<group>"; };
+		898E4FA21EDEF974006A826B /* GridViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		898E4FA41EDEF974006A826B /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
+		898E4FA61EDEF974006A826B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89D4A7791EB6EA4E0006E05D /* GridView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GridView.podspec; path = ../GridView.podspec; sourceTree = "<group>"; };
+		C22166B3B15CE907724B34A4 /* Pods-GridView-GridViewTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridView-GridViewTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-GridView-GridViewTests/Pods-GridView-GridViewTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +57,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		898E4F9F1EDEF974006A826B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				898E4FA71EDEF974006A826B /* GridView.framework in Frameworks */,
+				F52C3F0C5FCC8D9CB1E10533 /* Pods_GridView_GridViewTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -43,6 +74,8 @@
 			children = (
 				18060E4BDFFCEAAC87A1FE6E /* Pods-GridView.debug.xcconfig */,
 				2E1AE834B66A2EA89DAC49A5 /* Pods-GridView.release.xcconfig */,
+				C22166B3B15CE907724B34A4 /* Pods-GridView-GridViewTests.debug.xcconfig */,
+				1B43777C228F1C2065B095A0 /* Pods-GridView-GridViewTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -52,6 +85,7 @@
 			children = (
 				89D4A7791EB6EA4E0006E05D /* GridView.podspec */,
 				892FDE821EB214E000B1A333 /* GridView */,
+				898E4FA31EDEF974006A826B /* GridViewTests */,
 				892FDE811EB214E000B1A333 /* Products */,
 				056B319CB79333C420177D0F /* Pods */,
 				AE7C45FDE1DC7A9FAC657D47 /* Frameworks */,
@@ -62,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				892FDF521EB23F7E00B1A333 /* GridView.framework */,
+				898E4FA21EDEF974006A826B /* GridViewTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -78,10 +113,20 @@
 			path = GridView;
 			sourceTree = "<group>";
 		};
+		898E4FA31EDEF974006A826B /* GridViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				898E4FA41EDEF974006A826B /* GridViewTests.swift */,
+				898E4FA61EDEF974006A826B /* Info.plist */,
+			);
+			path = GridViewTests;
+			sourceTree = "<group>";
+		};
 		AE7C45FDE1DC7A9FAC657D47 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				1F805947CD4D71E9436CAAEA /* Pods_GridView.framework */,
+				1D72A67026D9466892EF3EDA /* Pods_GridView_GridViewTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -119,17 +164,44 @@
 			productReference = 892FDF521EB23F7E00B1A333 /* GridView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		898E4FA11EDEF974006A826B /* GridViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 898E4FAA1EDEF974006A826B /* Build configuration list for PBXNativeTarget "GridViewTests" */;
+			buildPhases = (
+				3A653D94413C3FCB52A353D3 /* [CP] Check Pods Manifest.lock */,
+				898E4F9E1EDEF974006A826B /* Sources */,
+				898E4F9F1EDEF974006A826B /* Frameworks */,
+				898E4FA01EDEF974006A826B /* Resources */,
+				171980AC0F966DC49451A28C /* [CP] Embed Pods Frameworks */,
+				57AD4426CA90C08A2D57DFD6 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				898E4FA91EDEF974006A826B /* PBXTargetDependency */,
+			);
+			name = GridViewTests;
+			productName = GridViewTests;
+			productReference = 898E4FA21EDEF974006A826B /* GridViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		892FDE771EB214E000B1A333 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Bruno Macabeus Aquino";
 				TargetAttributes = {
 					892FDF511EB23F7E00B1A333 = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = 56KUK57QCP;
+						ProvisioningStyle = Automatic;
+					};
+					898E4FA11EDEF974006A826B = {
+						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 56KUK57QCP;
 						ProvisioningStyle = Automatic;
 					};
@@ -148,6 +220,7 @@
 			projectRoot = "";
 			targets = (
 				892FDF511EB23F7E00B1A333 /* GridView */,
+				898E4FA11EDEF974006A826B /* GridViewTests */,
 			);
 		};
 /* End PBXProject section */
@@ -160,9 +233,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		898E4FA01EDEF974006A826B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		171980AC0F966DC49451A28C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-GridView-GridViewTests/Pods-GridView-GridViewTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A653D94413C3FCB52A353D3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		4D40B30D332A792531D0EFCF /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -176,6 +286,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-GridView/Pods-GridView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		57AD4426CA90C08A2D57DFD6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-GridView-GridViewTests/Pods-GridView-GridViewTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7F27AE9296B265923E9D0C37 /* [CP] Check Pods Manifest.lock */ = {
@@ -206,7 +331,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		898E4F9E1EDEF974006A826B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				898E4FAE1EDEFA6A006A826B /* GridConfiguration.swift in Sources */,
+				898E4FA51EDEF974006A826B /* GridViewTests.swift in Sources */,
+				898E4FAD1EDEFA68006A826B /* GridController.swift in Sources */,
+				898E4FAF1EDEFA6D006A826B /* GridLayout.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		898E4FA91EDEF974006A826B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 892FDF511EB23F7E00B1A333 /* GridView */;
+			targetProxy = 898E4FA81EDEF974006A826B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		892FDE861EB214E000B1A333 /* Debug */ = {
@@ -348,6 +492,32 @@
 			};
 			name = Release;
 		};
+		898E4FAB1EDEF974006A826B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C22166B3B15CE907724B34A4 /* Pods-GridView-GridViewTests.debug.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 56KUK57QCP;
+				INFOPLIST_FILE = GridViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = macabeus.GridViewTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		898E4FAC1EDEF974006A826B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B43777C228F1C2065B095A0 /* Pods-GridView-GridViewTests.release.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 56KUK57QCP;
+				INFOPLIST_FILE = GridViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = macabeus.GridViewTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -365,6 +535,15 @@
 			buildConfigurations = (
 				892FDF581EB23F7E00B1A333 /* Debug */,
 				892FDF591EB23F7E00B1A333 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		898E4FAA1EDEF974006A826B /* Build configuration list for PBXNativeTarget "GridViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				898E4FAB1EDEF974006A826B /* Debug */,
+				898E4FAC1EDEF974006A826B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

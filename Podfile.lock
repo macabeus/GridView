@@ -1,8 +1,12 @@
 PODS:
   - GridView (0.1.2)
+  - Nimble (7.0.0)
+  - Quick (1.1.0)
 
 DEPENDENCIES:
   - GridView (from `.`)
+  - Nimble
+  - Quick
 
 EXTERNAL SOURCES:
   GridView:
@@ -10,7 +14,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   GridView: b7c93fe68c43956bbec88e7483b3efa3cebb3c8d
+  Nimble: 874982b605d4d752fcac6be695d13c502de84b1b
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
 
-PODFILE CHECKSUM: f8bac4701367eee51b06ddaa5559a6ba26fab4e2
+PODFILE CHECKSUM: 4d80ca2f6861319161fc6ea3b9c99b06aab6ef86
 
 COCOAPODS: 1.2.1

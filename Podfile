@@ -8,6 +8,10 @@ target 'GridView' do
 
   # Pods for GridView
 
+    target 'GridViewTests' do
+        pod 'Quick'
+        pod 'Nimble'
+    end
 end
 
 target 'Example' do
