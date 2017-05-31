@@ -8,6 +8,17 @@
 
 import UIKit
 
+infix operator ~
+func ~<T> (left: CountableClosedRange<T>, right: CountableClosedRange<T>) -> Bool {
+    for i in right {
+        if left.contains(i) {
+            return true
+        }
+    }
+    
+    return false
+}
+
 /**
  Struct to encapsulate the cell with yours parameters, to show in grid.
  The parameters are passed to *setup(cell:params)* and *load(params)* methods 
@@ -39,6 +50,10 @@ public protocol SlotableCell {
     static var slotHeight: Int { get }
     
     /**
+     */
+    var params: [String: Any] { get set }
+    
+    /**
      This method if called when a cell is created in grid
     */
     func load(params: [String: Any])
@@ -57,12 +72,12 @@ public protocol GridViewDelegate {
      This delegate is called in *collectionView(_:cellForItemAt)* from *GridViewController*.
      It's useful when we need to setup many cells with same code
     */
-    func setup(cell: UICollectionViewCell, params: [String: Any])
+    func setup(cell: SlotableCell, params: [String: Any])
 }
 
-public class GridViewController: UICollectionViewController {
+public class GridViewController: UICollectionViewController, GridLayoutDelegate {
     
-    public var gridConfiguration: [[Slot]]?
+    public var gridConfiguration = GridConfiguration(slots: [[]])
     public var delegate: GridViewDelegate?
     
     override public func viewDidLoad() {
@@ -81,9 +96,6 @@ public class GridViewController: UICollectionViewController {
             collectionView!.register(nib, forCellWithReuseIdentifier: className)
         }
         
-        // Set grid blank, for default
-        gridConfiguration = [[]]
-        
         // Set background color clear, for default
         self.view.backgroundColor = UIColor.clear
     }
@@ -98,103 +110,325 @@ public class GridViewController: UICollectionViewController {
     }
     
     override public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return gridConfiguration!.count
+        return gridConfiguration.slots.count
     }
     
     override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gridConfiguration![section].count
+        return gridConfiguration.slots[section].count
     }
     
+    var originalIndexPathToCell: [IndexPath: UICollectionViewCell] = [:]
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let slot = gridConfiguration![indexPath.section][indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: getClassName(of: slot.cell)!, for: indexPath)
+        let slot = gridConfiguration.slots[indexPath.section][indexPath.row]
+        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: getClassName(of: slot.cell)!, for: indexPath) as! SlotableCell
         
-        (cell as! SlotableCell).load(params: slot.params)
+        //
+        cell.params = slot.params
+        cell.load(params: slot.params)
         delegate!.setup(cell: cell, params: slot.params)
         
-        return cell
+        //
+        gridConfiguration.cellToIndexPath[cell as! UICollectionViewCell] = indexPath
+        
+        //
+        originalIndexPathToCell[indexPath] = (cell as! UICollectionViewCell)
+        
+        //
+        return cell as! UICollectionViewCell
     }
     
     //
     func getClassName(of any: Any) -> String? {
         return "\(any)".components(separatedBy: ".").last
     }
-}
-
-extension GridViewController: GridLayoutDelegate {
-    func maxRow() -> Int {
-        return gridConfiguration!.map({ $0.reduce(0) { $0 + $1.cell.slotWidth } }).max()!
+    
+    //
+    public override func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
+        
+        return true
     }
     
-    func cellSlotSize(section: Int, row: Int) -> (width: Int, height: Int) {
-        let slotCell = gridConfiguration![section][row].cell
+    public override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         
-        return (slotCell.slotWidth, slotCell.slotHeight)
+        context.previouslyFocusedView?.layer.shadowOpacity = 0.0
+        context.nextFocusedView?.layer.shadowOpacity = 1.0
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.rearrange))
+        tap.allowedPressTypes = [NSNumber(value: UIPressType.select.rawValue)];
+        context.nextFocusedView?.addGestureRecognizer(tap)
     }
     
-    // as funções gridNumberOfRows e gridNumberOfColumns seguem um algoritimo parecido,
-    // para computar a quantidade de linhas e colunas, respectivamente, que a grid precisará
-    // o algoritimo é o seguinte:
-    // 1 - armazenará na variável yOffset o buffer de quantas linhas são necessárias para desenhar a célula da linha atual
-    // 2 - em "gridConfiguration.slots.forEach" computaremos linha a linha da grid
-    // 3 - em "while yOffset[index] != 0 {" finalizando a computação da linha, então, como já usamos uma linha para desenhar a célula, apagaremos em 1 cada item de yOffset
-    func gridNumberOfRows() -> Int {
-        var yOffset: [Int] = [Int](repeating: 0, count: 10)
-        
-        var maxIndex = 0
-        gridConfiguration!.forEach {
-            var index = 0
-            $0.forEach {
-                while yOffset[index] != 0 {
-                    index += 1
-                }
-                
-                yOffset[index] = $0.cell.slotHeight
-                if index > maxIndex {
-                    maxIndex = index
-                }
-            }
-            index = 0
-            
-            while yOffset[index] != 0 {
-                yOffset[index] -= 1
-                index += 1
+    private func indexPathToSlotableCell(_ indexPath: IndexPath) -> SlotableCell {
+        for i in gridConfiguration.cellToIndexPath.enumerated() {
+            if i.element.value == indexPath {
+                return i.element.key as! SlotableCell
             }
         }
         
-        // a quantidade de linhas necessárias para se desenhar a grid é o quanto sobrou para desenhar a célula (ou seja, yOffset.max) + quantas linhas foram necessárias para desenhar as demais células (gridConfiguration.slots.count)
-        return yOffset.max()! + gridConfiguration!.count
+        fatalError()
     }
     
-    func gridNumberOfColumns() -> Int {
-        var yOffset: [Int] = [Int](repeating: 0, count: 10)
+    var gridLayout: GridLayout {
+        return (collectionView!.collectionViewLayout as! GridLayout)
+    }
+    
+    private func sideCells(_ cellTargetIndexPath: IndexPath) -> Set<IndexPath> {
         
-        var maxIndex = 0
-        gridConfiguration!.forEach {
-            var index = 0
-            $0.forEach {
-                while yOffset[index] != 0 {
-                    index += 1
-                }
-                
-                for _ in 0..<$0.cell.slotWidth {
-                    yOffset[index] = $0.cell.slotHeight
-                    index += 1
-                }
-                if index > maxIndex {
-                    maxIndex = index
-                }
-            }
-            index = 0
+        let cellTargetRowColumn = gridConfiguration.indexPathToRowColumn[cellTargetIndexPath]!
+        let cellTarget = indexPathToSlotableCell(cellTargetIndexPath)
+        let slotWidth = type(of: cellTarget).slotWidth
+        
+        ////
+        // check the cells will be affected on destination
+        
+        // possíveis células afetadas no destino devido a altura
+        var cellsAtRigthByRigth: Set<IndexPath> = Set()
+        for i in cellTargetRowColumn.row {
             
-            while yOffset[index] != 0 {
-                yOffset[index] -= 1
-                index += 1
-            }
+            cellsAtRigthByRigth = cellsAtRigthByRigth.union(
+                gridConfiguration.getCellOf(row: i)
+            )
+        }
+        cellsAtRigthByRigth.remove(cellTargetIndexPath)
+        
+        // possíveis células afetadas no destino devido a largura
+        var cellsAtRigthByTop: Set<IndexPath> = Set()
+        for i in cellTargetRowColumn.column {
+            
+            let index = i + slotWidth
+            
+            cellsAtRigthByTop = cellsAtRigthByTop.union(
+                gridConfiguration.getCellOf(column: index)
+            )
         }
         
-        // a quantidade de colunas necessárias para desenhar a grid é o maior índice necessário que foi usado em yOffset (armazenado em maxIndex)
-        return maxIndex
+        //
+        let cellAffectedAtDestination = cellsAtRigthByRigth.intersection(cellsAtRigthByTop)
+        
+        //
+        return cellAffectedAtDestination
     }
+    
+    private func move(cell cellTargetIndexPath: IndexPath) {
+        
+        let cellTargetRowColumn = gridConfiguration.indexPathToRowColumn[cellTargetIndexPath]!
+        let cellTarget = indexPathToSlotableCell(cellTargetIndexPath)
+        let slotWidth = type(of: cellTarget).slotWidth
+        
+        ////
+        // check the cells will be affected on destination
+        
+        // possíveis células afetadas no destino devido a altura
+        var cellsAtSamesRows: Set<IndexPath> = Set()
+        for i in cellTargetRowColumn.row {
+            
+            cellsAtSamesRows = cellsAtSamesRows.union(
+                gridConfiguration.getCellOf(row: i)
+            )
+            
+        }
+        cellsAtSamesRows.remove(cellTargetIndexPath)
+        
+        // possíveis células afetadas no destino devido a largura
+        var cellsAtRigthByTop: Set<IndexPath> = Set()
+        for i in cellTargetRowColumn.column {
+            
+            let index = i + slotWidth
+            
+            cellsAtRigthByTop = cellsAtRigthByTop.union(
+                gridConfiguration.getCellOf(column: index)
+                //gridLayout.getCellOf(column: index)
+            )
+        }
+        
+        // filtrar para saber quais células realmente serão afetadas no destino
+        let cellAffectedAtDestination = cellsAtSamesRows.intersection(cellsAtRigthByTop)
+        
+        ////
+        // check the cells will be affected on origin
+        
+        // get the max row and min row of destination affected cell
+        let rowsAffectDest = cellAffectedAtDestination.map {
+            gridConfiguration.indexPathToRowColumn[$0]!.row
+        }
+        
+        let rangeRowsAffectDest = rowsAffectDest.reduce(rowsAffectDest[0]) { oldValue, currentValue in
+            let lowerBound = min(oldValue.lowerBound, currentValue.lowerBound)
+            let upperBound = max(oldValue.upperBound, currentValue.upperBound)
+            
+            return lowerBound...upperBound
+        }
+        
+        // get the cells will be affected in origin
+        let cellsAffectOrigin = gridConfiguration.getCellOf(column: cellTargetRowColumn.column.upperBound).filter { c in
+            self.gridConfiguration.indexPathToRowColumn[c]!.row ~ rangeRowsAffectDest
+        }
+        
+        ////
+        // animate
+        
+        var cellToSwap: [(origin: IndexPath, dest: IndexPath, destColumnSize: Int)] = []
+        
+        for i in cellsAffectOrigin {
+            let mySideCells = sideCells(i)
+            
+            let x = mySideCells.map { current -> ((IndexPath), Int) in
+                let column = self.gridConfiguration.indexPathToRowColumn[current]!.column //self.gridLayout.indexPathToRowColumn[current]!.column
+                
+                return (current, column.upperBound - column.lowerBound)
+            }
+            let largest = x.max(by: { $0.1 < $1.1 })!
+            
+            cellToSwap.append((origin: i, dest: largest.0, destColumnSize: largest.1))
+        }
+        
+        var frameOriginToDest: [(cell: UICollectionViewCell, dest: CGPoint)] = []
+        
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                
+                for i in cellToSwap {
+                    //
+                    let cell = self.indexPathToSlotableCell(i.origin) as! UICollectionViewCell
+                    let cellDest =
+                        (self.indexPathToSlotableCell(i.dest) as! UICollectionViewCell).frame.origin.x +
+                        (CGFloat(i.destColumnSize) * self.gridLayout.columnWidth)
+                    
+                    frameOriginToDest.append(
+                        (
+                            cell: cell,
+                            dest: CGPoint(x: cellDest, y: cell.frame.origin.y)
+                        )
+                    )
+                    
+                    //
+                    let cellDestAffect = self.indexPathToSlotableCell(i.dest) as! UICollectionViewCell
+                    
+                    frameOriginToDest.append(
+                        (
+                            cell: cellDestAffect,
+                            dest: CGPoint(x: cell.frame.origin.x, y: cellDestAffect.frame.origin.y)
+                        )
+                    )
+                }
+                
+                frameOriginToDest.forEach {
+                    $0.cell.frame.origin = $0.dest
+                }
+            
+            }, completion: { _ -> Void in
+                
+                let cellToSwap = cellToSwap
+                let rangeRowsAffectDest = rangeRowsAffectDest
+                
+                var cellsOverlapping: [UICollectionViewCell] = []
+                
+                for i in rangeRowsAffectDest {
+                    let cellsAndOriginX = self.gridConfiguration.getCellOf(row: i).map { ($0, (self.indexPathToSlotableCell($0) as! UICollectionViewCell).frame.origin.x) }
+                    var originX = cellsAndOriginX.map { Float($0.1) }
+                    Set(originX).forEach { originX.remove(at: originX.index(of: $0)!) }
+                    
+                    let transform = cellsAndOriginX
+                        .filter({ originX.contains(Float($0.1)) })
+                        .filter({ current -> Bool in !cellToSwap.contains { $0.dest == current.0  || $0.origin == current.0 } })
+                        .map({ $0.0 })
+                        .map({ self.indexPathToSlotableCell($0) as! UICollectionViewCell })
+                    
+                    cellsOverlapping.append(contentsOf: transform)
+                }
+                
+                UIView.animate(
+                    withDuration: 0.5,
+                    animations: {
+                        
+                        for i in cellsOverlapping {
+                            i.frame.origin = CGPoint(
+                                x: i.frame.origin.x - self.gridLayout.columnWidth,
+                                y: i.frame.origin.y
+                            )
+                        }
+                        
+                    }, completion: { _ -> Void in
+                        
+                        let collectionView = self.collectionView!
+                        let cellsSorted = collectionView.visibleCells
+                            .sorted(by: { $0.0.frame.origin.x < $0.1.frame.origin.x })
+                            .sorted(by: { $0.0.frame.origin.y < $0.1.frame.origin.y })
+                        
+                        let cellsPerRow = cellsSorted
+                            .reduce([CGFloat: [UICollectionViewCell]]()) {
+                                result, value -> [CGFloat: [UICollectionViewCell]] in
+                            
+                                let originY = value.frame.origin.y
+                                var temp = result
+                                if let _ = temp[originY] {
+                                    temp[originY]!.append(value)
+                                } else {
+                                    temp[originY] = [value]
+                                }
+                            
+                                return temp
+                            }.sorted {
+                                $0.0.key < $0.1.key
+                            }.map {
+                                $0.value
+                            }
+                        
+                        var newSlots = [[Slot]]()
+                        for i in cellsPerRow {
+                            
+                            let slots = i.map {
+                                Slot(cell: type(of: $0) as! SlotableCell.Type, params: ($0 as! SlotableCell).params)
+                            }
+                            
+                            newSlots.append(slots)
+                        }
+                        
+                        let newGridConfiguration = GridConfiguration(slots: newSlots)
+                        
+                        var cellsArray = (cellsPerRow.flatMap { $0 }).makeIterator()
+                        
+                        var indexPathSection = -1
+                        var indexPathItem = 0
+                        
+                        for mySlot in self.gridConfiguration.parseSlots() {
+                            
+                            indexPathSection += 1
+                            
+                            switch mySlot {
+                            case .cell(_, _):
+                                
+                                let myCell = cellsArray.next()!
+                                
+                                newGridConfiguration.cellToIndexPath[myCell] = IndexPath(
+                                    item: indexPathSection,
+                                    section: indexPathItem
+                                )
+                                
+                            case .newRow():
+                                
+                                indexPathSection = -1
+                                indexPathItem += 1
+                            }
+                            
+                        }
+                        
+                        self.gridConfiguration = newGridConfiguration
+                    }
+                )
+                
+            }
+        )
+    }
+    
+    func rearrange(_ cell: UITapGestureRecognizer) {
+        
+        //let indexPath = collectionView!.indexPath(for: cell.view! as! UICollectionViewCell)!
+        let indexPath = gridConfiguration.cellToIndexPath[cell.view! as! UICollectionViewCell]!
+        
+        move(cell: indexPath)
+    }
+    
 }

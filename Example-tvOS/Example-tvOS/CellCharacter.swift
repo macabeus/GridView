@@ -14,6 +14,7 @@ class CellCharacter: UICollectionViewCell, SlotableCell {
     @IBOutlet weak var image: UIImageView!
     static let slotWidth = 1
     static let slotHeight = 1
+    var params: [String : Any] = [:]
     
     func load(params: [String: Any]) {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)

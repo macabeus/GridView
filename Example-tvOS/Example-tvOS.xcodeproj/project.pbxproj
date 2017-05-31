@@ -19,6 +19,12 @@
 		892FDF6C1EB3CC4500B1A333 /* CellMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF6B1EB3CC4500B1A333 /* CellMap.swift */; };
 		892FDF6E1EB3DE9100B1A333 /* CellChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF6D1EB3DE9100B1A333 /* CellChart.swift */; };
 		892FDF701EB3DE9D00B1A333 /* CellChart.xib in Resources */ = {isa = PBXBuildFile; fileRef = 892FDF6F1EB3DE9D00B1A333 /* CellChart.xib */; };
+		898E4F5B1ED5CB79006A826B /* CellBlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4F5A1ED5CB79006A826B /* CellBlue.swift */; };
+		898E4F5F1ED5CBC6006A826B /* CellGreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4F5E1ED5CBC6006A826B /* CellGreen.swift */; };
+		898E4F631ED5CC1B006A826B /* CellYellow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4F621ED5CC1B006A826B /* CellYellow.swift */; };
+		898E4F671ED5CCCD006A826B /* CellBlue.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898E4F661ED5CCCD006A826B /* CellBlue.xib */; };
+		898E4F691ED5CCE8006A826B /* CellGreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898E4F681ED5CCE8006A826B /* CellGreen.xib */; };
+		898E4F6B1ED5CCFC006A826B /* CellYellow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 898E4F6A1ED5CCFC006A826B /* CellYellow.xib */; };
 		89D4A7781EB6D6E70006E05D /* ProtocolCellRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D4A7771EB6D6E70006E05D /* ProtocolCellRealTime.swift */; };
 		A52F657142C2419BE8CB666C /* Pods_Example_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88CD958C69AD4EC72E1F693D /* Pods_Example_tvOS.framework */; };
 /* End PBXBuildFile section */
@@ -41,6 +47,12 @@
 		892FDF6B1EB3CC4500B1A333 /* CellMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellMap.swift; sourceTree = "<group>"; };
 		892FDF6D1EB3DE9100B1A333 /* CellChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChart.swift; sourceTree = "<group>"; };
 		892FDF6F1EB3DE9D00B1A333 /* CellChart.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellChart.xib; sourceTree = "<group>"; };
+		898E4F5A1ED5CB79006A826B /* CellBlue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellBlue.swift; sourceTree = "<group>"; };
+		898E4F5E1ED5CBC6006A826B /* CellGreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellGreen.swift; sourceTree = "<group>"; };
+		898E4F621ED5CC1B006A826B /* CellYellow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellYellow.swift; sourceTree = "<group>"; };
+		898E4F661ED5CCCD006A826B /* CellBlue.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellBlue.xib; sourceTree = "<group>"; };
+		898E4F681ED5CCE8006A826B /* CellGreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellGreen.xib; sourceTree = "<group>"; };
+		898E4F6A1ED5CCFC006A826B /* CellYellow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellYellow.xib; sourceTree = "<group>"; };
 		89D4A7771EB6D6E70006E05D /* ProtocolCellRealTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtocolCellRealTime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,8 +91,14 @@
 			children = (
 				892FDE991EB2152600B1A333 /* AppDelegate.swift */,
 				892FDE9B1EB2152600B1A333 /* MainTvController.swift */,
-				892FDF691EB3CC2300B1A333 /* CellMap.xib */,
+				898E4F5A1ED5CB79006A826B /* CellBlue.swift */,
+				898E4F661ED5CCCD006A826B /* CellBlue.xib */,
+				898E4F5E1ED5CBC6006A826B /* CellGreen.swift */,
+				898E4F681ED5CCE8006A826B /* CellGreen.xib */,
+				898E4F621ED5CC1B006A826B /* CellYellow.swift */,
+				898E4F6A1ED5CCFC006A826B /* CellYellow.xib */,
 				892FDF6B1EB3CC4500B1A333 /* CellMap.swift */,
+				892FDF691EB3CC2300B1A333 /* CellMap.xib */,
 				892FDF631EB395B300B1A333 /* CellLogs.xib */,
 				892FDF671EB396CD00B1A333 /* CellLogs.swift */,
 				892FDF6F1EB3DE9D00B1A333 /* CellChart.xib */,
@@ -176,11 +194,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				892FDF641EB395B300B1A333 /* CellLogs.xib in Resources */,
+				898E4F671ED5CCCD006A826B /* CellBlue.xib in Resources */,
 				892FDEA11EB2152600B1A333 /* Assets.xcassets in Resources */,
 				892FDF701EB3DE9D00B1A333 /* CellChart.xib in Resources */,
+				898E4F6B1ED5CCFC006A826B /* CellYellow.xib in Resources */,
 				892FDE9F1EB2152600B1A333 /* Main.storyboard in Resources */,
 				892FDF621EB3959E00B1A333 /* CellCharacter.xib in Resources */,
 				892FDF6A1EB3CC2300B1A333 /* CellMap.xib in Resources */,
+				898E4F691ED5CCE8006A826B /* CellGreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,12 +261,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				892FDF681EB396CD00B1A333 /* CellLogs.swift in Sources */,
+				898E4F5B1ED5CB79006A826B /* CellBlue.swift in Sources */,
 				892FDE9C1EB2152600B1A333 /* MainTvController.swift in Sources */,
 				892FDF661EB396A800B1A333 /* CellCharacter.swift in Sources */,
 				89D4A7781EB6D6E70006E05D /* ProtocolCellRealTime.swift in Sources */,
 				892FDE9A1EB2152600B1A333 /* AppDelegate.swift in Sources */,
 				892FDF6E1EB3DE9100B1A333 /* CellChart.swift in Sources */,
+				898E4F5F1ED5CBC6006A826B /* CellGreen.swift in Sources */,
 				892FDF6C1EB3CC4500B1A333 /* CellMap.swift in Sources */,
+				898E4F631ED5CC1B006A826B /* CellYellow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

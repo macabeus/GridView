@@ -14,6 +14,7 @@ class CellChart: UICollectionViewCell, SlotableCell {
     @IBOutlet weak var chart: UIImageView!
     static let slotWidth = 2
     static let slotHeight = 1
+    var params: [String : Any] = [:]
     
     func load(params: [String: Any]) {
         chart.contentMode = .scaleAspectFill
