@@ -2,15 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Example-tvOS/Example-tvOS.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Example-iOS/Example-iOS.xcodeproj">
+      location = "group:/Users/macabeus/Dropbox (BEPiD)/CEFET/Bepid/GridView/Example-tvOS/Example.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:GridView/GridView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Example-tvOS/Example.xcodeproj">
    </FileRef>
 </Workspace>
