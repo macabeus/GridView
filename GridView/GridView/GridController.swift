@@ -423,12 +423,20 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         )
     }
     
-    func rearrange(_ cell: UITapGestureRecognizer) {
+    public func rearrange(_ cell: UITapGestureRecognizer) {
         
         //let indexPath = collectionView!.indexPath(for: cell.view! as! UICollectionViewCell)!
         let indexPath = gridConfiguration.cellToIndexPath[cell.view! as! UICollectionViewCell]!
         
+        print(getParams(of: cell.view! as! UICollectionViewCell))
         move(cell: indexPath)
+    }
+    
+    public func getParams(of cell: UICollectionViewCell) -> [String: Any] {
+        let indexPath = gridConfiguration.cellToIndexPath[cell]!
+        let cellTarget = indexPathToSlotableCell(indexPath)
+        
+        return cellTarget.params
     }
     
 }
