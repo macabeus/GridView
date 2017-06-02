@@ -73,6 +73,10 @@ public protocol GridViewDelegate {
      It's useful when we need to setup many cells with same code
     */
     func setup(cell: SlotableCell, params: [String: Any])
+    
+    func gridView(_ gridView: GridViewController, shouldMoveCellAt indexPath: IndexPath) -> Bool
+    
+    func gridView(_ gridView: GridViewController, gestureToStartMoveAt indexPath: IndexPath) -> UIGestureRecognizer
 }
 
 public class GridViewController: UICollectionViewController, GridLayoutDelegate {
@@ -154,9 +158,14 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         context.previouslyFocusedView?.layer.shadowOpacity = 0.0
         context.nextFocusedView?.layer.shadowOpacity = 1.0
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.rearrange))
-        tap.allowedPressTypes = [NSNumber(value: UIPressType.select.rawValue)];
-        context.nextFocusedView?.addGestureRecognizer(tap)
+        if let cell = context.nextFocusedView as? UICollectionViewCell,
+            let cellIndexPath = gridConfiguration.cellToIndexPath[cell],
+            delegate!.gridView(self, shouldMoveCellAt: cellIndexPath) {
+            
+            let gesture = delegate!.gridView(self, gestureToStartMoveAt: cellIndexPath)
+            gesture.addTarget(self, action: #selector(self.rearrange))
+            cell.addGestureRecognizer(gesture)
+        }
     }
     
     private func indexPathToSlotableCell(_ indexPath: IndexPath) -> SlotableCell {
@@ -416,6 +425,8 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                         }
                         
                         self.gridConfiguration = newGridConfiguration
+                        
+                        (cellTarget as! UICollectionViewCell).gestureRecognizers!.forEach { $0.isEnabled = true }
                     }
                 )
                 
@@ -425,10 +436,14 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
     
     public func rearrange(_ cell: UITapGestureRecognizer) {
         
-        //let indexPath = collectionView!.indexPath(for: cell.view! as! UICollectionViewCell)!
+        guard cell.state == .ended else {
+            return
+        }
+        
         let indexPath = gridConfiguration.cellToIndexPath[cell.view! as! UICollectionViewCell]!
         
         print(getParams(of: cell.view! as! UICollectionViewCell))
+        cell.view!.gestureRecognizers!.forEach { $0.isEnabled = false }
         move(cell: indexPath)
     }
     

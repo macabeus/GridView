@@ -67,4 +67,15 @@ extension MainTvController: GridViewDelegate {
         (cell as! UICollectionViewCell).layer.shadowColor = UIColor.white.cgColor
         (cell as! UICollectionViewCell).layer.cornerRadius = 10
     }
+    
+    func gridView(_ gridView: GridViewController, shouldMoveCellAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func gridView(_ gridView: GridViewController, gestureToStartMoveAt indexPath: IndexPath) -> UIGestureRecognizer {
+        
+        let gesture = UITapGestureRecognizer()
+        gesture.numberOfTapsRequired = 2
+        return gesture
+    }
 }
