@@ -9,10 +9,12 @@
 //import Foundation
 import UIKit // todo: GridConfiguration need be agnostic to UIKit!
 
-
 public class GridConfiguration {
     
     let slots: [[Slot]]
+    var parseSlotStep: [ParseSlotStep]?
+    var gridNumberOfRows: Int?
+    var gridNumberOfColumns: Int?
     private var cellPerRow: [Int: [IndexPath]] = [:]
     private var cellPerColumn: [Int: [IndexPath]] = [:]
     var cellToIndexPath: [UICollectionViewCell: IndexPath] = [:]
@@ -21,7 +23,11 @@ public class GridConfiguration {
     public init(slots: [[Slot]]) {
         
         self.slots = slots
-        _ = parseSlots()
+        let parseSlotsResult = parseSlots()
+        
+        self.parseSlotStep = parseSlotsResult.0
+        self.gridNumberOfRows = parseSlotsResult.1.matrix.count
+        self.gridNumberOfColumns = parseSlotsResult.1.matrix[0].count
     }
     
     enum ParseSlotStep {
@@ -29,7 +35,7 @@ public class GridConfiguration {
         case newRow()
     }
     
-    func parseSlots() -> [ParseSlotStep] {
+    fileprivate func parseSlots() -> ([ParseSlotStep], MatrixBool) {
         
         var results: [ParseSlotStep] = []
         cellPerRow = [:]
@@ -37,53 +43,62 @@ public class GridConfiguration {
         indexPathToRowColumn = [:]
         
         //
-        var slotsFilleds: [[Bool]] = []
-        for _ in 0..<gridNumberOfRows() {
-            slotsFilleds.append([Bool](repeating: false, count: gridNumberOfColumns()))
-        }
+        let slotsFilleds = MatrixBool(initialWidth: 1, initialHeight: 1)
         
         // fill the collection view
         var indexPathSection = -1
         var indexPathItem = 0
         
         var column: Int
-        let totalColumns = maxRow()
         var columnsFill: Int
         
         for section in 0..<slots.count {
             column = 0
             columnsFill = 0
             
+            if section == slotsFilleds.matrix.count {
+                slotsFilleds.growHeight(1)
+            }
+            
             if slots[section].count > 0 {
                 // get the first column with free space
-                while slotsFilleds[section][columnsFill] {
+                while slotsFilleds.matrix[section][columnsFill] {
                     columnsFill += 1
                 }
                 column = columnsFill
             } else {
                 // if the row don't have a cell
-                columnsFill = totalColumns
+                columnsFill = slotsFilleds.matrix[0].count
             }
             
             //
             for item in 0..<slots[section].count {
                 indexPathSection += 1
-                //let indexPath = IndexPath(item: item, section: section)
                 
                 // set size of cell
                 let slotSize = cellSlotSize(section: section, row: item)
                 let slotWidth = slotSize.width
                 let slotHeight = slotSize.height
                 
+                // grow up slotsFilleds if need
+                let diffW = slotsFilleds.matrix[0].count - column - slotWidth
+                if diffW < 0 {
+                    slotsFilleds.growWidth(diffW * -1)
+                }
+                
+                let diffH = slotsFilleds.matrix.count - section - slotHeight
+                if diffH < 0 {
+                    slotsFilleds.growHeight(diffH * -1)
+                }
+                
                 //
                 columnsFill += slotWidth
                 
                 // checar se tem espaço nessa coluna; se não tiver, ir para o próximo espaço vago
-                // todo: talvez se isso ficar no começo desse for fique mais legível
-                while slotsFilleds[section][column] {
+                while slotsFilleds.matrix[section][column...column + slotWidth - 1].contains(true) {
                     column += 1
                     columnsFill += 1
-                    if column == gridNumberOfColumns() {
+                    if column == gridNumberOfColumns {
                         print("[WARNING GridLayout] Célula de \(section):\(item) ultrapassou os limites!")
                     }
                 }
@@ -91,7 +106,7 @@ public class GridConfiguration {
                 // atualizar yOffset e contentHeight
                 for i in 0..<slotHeight {
                     for j in 0..<slotWidth {
-                        slotsFilleds[section + i][column + j] = true
+                        slotsFilleds.matrix[section + i][column + j] = true
                     }
                 }
 
@@ -131,7 +146,7 @@ public class GridConfiguration {
             indexPathItem += 1
         }
         
-        return results
+        return (results, slotsFilleds)
     }
     
     func getCellOf(column: Int) -> Set<IndexPath> {
@@ -141,14 +156,7 @@ public class GridConfiguration {
     func getCellOf(row: Int) -> Set<IndexPath> {
         return Set(cellPerRow[row] ?? [])
     }
-    
-    /**
-     Return length of row with max length
-     */
-    func maxRow() -> Int {
-        return slots.map({ $0.reduce(0) { $0 + $1.cell.slotWidth } }).max()!
-    }
-    
+
     /**
      Return the size of a cell
      */
@@ -157,76 +165,34 @@ public class GridConfiguration {
         
         return (slotCell.slotWidth, slotCell.slotHeight)
     }
-    
-    /**
-     Return total number of rows
-     */
-    // as funções gridNumberOfRows e gridNumberOfColumns seguem um algoritimo parecido,
-    // para computar a quantidade de linhas e colunas, respectivamente, que a grid precisará
-    // o algoritimo é o seguinte:
-    // 1 - armazenará na variável yOffset o buffer de quantas linhas são necessárias para desenhar a célula da linha atual
-    // 2 - em "gridConfiguration.slots.forEach" computaremos linha a linha da grid
-    // 3 - em "while yOffset[index] != 0 {" finalizando a computação da linha, então, como já usamos uma linha para desenhar a célula, apagaremos em 1 cada item de yOffset
-    func gridNumberOfRows() -> Int {
-        var yOffset: [Int] = [Int](repeating: 0, count: 10)
-        
-        var maxIndex = 0
-        slots.forEach {
-            var index = 0
-            $0.forEach {
-                while yOffset[index] != 0 {
-                    index += 1
-                }
-                
-                yOffset[index] = $0.cell.slotHeight
-                if index > maxIndex {
-                    maxIndex = index
-                }
-            }
-            index = 0
-            
-            while yOffset[index] != 0 {
-                yOffset[index] -= 1
-                index += 1
-            }
-        }
-        
-        // a quantidade de linhas necessárias para se desenhar a grid é o quanto sobrou para desenhar a célula (ou seja, yOffset.max) + quantas linhas foram necessárias para desenhar as demais células (gridConfiguration.slots.count)
-        return yOffset.max()! + slots.count
-    }
-    
-    /**
-     Return total number of columns
-     */
-    func gridNumberOfColumns() -> Int {
-        var yOffset: [Int] = [Int](repeating: 0, count: 10)
-        
-        var maxIndex = 0
-        slots.forEach {
-            var index = 0
-            $0.forEach {
-                while yOffset[index] != 0 {
-                    index += 1
-                }
-                
-                for _ in 0..<$0.cell.slotWidth {
-                    yOffset[index] = $0.cell.slotHeight
-                    index += 1
-                }
-                if index > maxIndex {
-                    maxIndex = index
-                }
-            }
-            index = 0
-            
-            while yOffset[index] != 0 {
-                yOffset[index] -= 1
-                index += 1
-            }
-        }
-        
-        // a quantidade de colunas necessárias para desenhar a grid é o maior índice necessário que foi usado em yOffset (armazenado em maxIndex)
-        return maxIndex
-    }
+}
 
+fileprivate class MatrixBool {
+    var matrix: [[Bool]]
+    
+    init(initialWidth: Int, initialHeight: Int) {
+        
+        let values = [Bool](repeating: false, count: initialWidth)
+        matrix = []
+        
+        for _ in 0..<initialHeight {
+            matrix.append(values)
+        }
+    }
+    
+    func growWidth(_ growCount: Int) {
+        let newValues = [Bool](repeating: false, count: growCount)
+        
+        for i in 0..<matrix.count {
+            matrix[i].append(contentsOf: newValues)
+        }
+    }
+    
+    func growHeight(_ growCount: Int) {
+        let newValues = [Bool](repeating: false, count: matrix[0].count)
+        
+        for _ in 0..<growCount {
+            matrix.append(newValues)
+        }
+    }
 }

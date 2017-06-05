@@ -405,7 +405,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                         var indexPathSection = -1
                         var indexPathItem = 0
                         
-                        for mySlot in self.gridConfiguration.parseSlots() {
+                        for mySlot in self.gridConfiguration.parseSlotStep! {
                             
                             indexPathSection += 1
                             

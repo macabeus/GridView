@@ -28,11 +28,11 @@ public class GridLayout: UICollectionViewLayout {
     }
     
     public var numberOfColumns: Int {
-        return delegate.gridConfiguration.gridNumberOfColumns()
+        return delegate.gridConfiguration.gridNumberOfColumns!
     }
     
     public var numberOfRows: Int {
-        return delegate.gridConfiguration.gridNumberOfRows()
+        return delegate.gridConfiguration.gridNumberOfRows!
     }
     
     public var columnWidth: CGFloat {
@@ -56,9 +56,8 @@ public class GridLayout: UICollectionViewLayout {
             //
             var indexPathSection = -1
             var indexPathItem = 0
-            var columnsFill = 0
             var yOffsetMiniumForNewRow: CGFloat = 0
-            for i in delegate.gridConfiguration.parseSlots() {
+            for i in delegate.gridConfiguration.parseSlotStep! {
                 
                 switch i {
                     
@@ -93,14 +92,9 @@ public class GridLayout: UICollectionViewLayout {
                 
                 case .newRow():
                     // update yOffset of slots that not receive a cell
-                    yOffset = yOffset[0..<columnsFill] +
-                        yOffset[columnsFill..<yOffset.count].map {
-                            max(yOffsetMiniumForNewRow, $0)
-                    }
-
-                    columnsFill = 0
                     yOffsetMiniumForNewRow += columnRow + cellPadding * 2
-
+                    yOffset = yOffset.map { max(yOffsetMiniumForNewRow, $0) }
+                    
                     //
                     indexPathSection = -1
                     indexPathItem += 1
