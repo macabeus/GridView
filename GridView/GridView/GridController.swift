@@ -8,17 +8,6 @@
 
 import UIKit
 
-infix operator ~
-func ~<T> (left: CountableClosedRange<T>, right: CountableClosedRange<T>) -> Bool {
-    for i in right {
-        if left.contains(i) {
-            return true
-        }
-    }
-    
-    return false
-}
-
 /**
  Struct to encapsulate the cell with yours parameters, to show in grid.
  The parameters are passed to *setup(cell:params)* and *load(params)* methods 
@@ -49,8 +38,6 @@ public protocol SlotableCell {
      */
     static var slotHeight: Int { get }
     
-    /**
-     */
     var params: [String: Any] { get set }
     
     /**
@@ -76,13 +63,31 @@ public protocol GridViewDelegate {
     
     func gridView(_ gridView: GridViewController, shouldMoveCellAt indexPath: IndexPath) -> Bool
     
-    func gridView(_ gridView: GridViewController, gestureToStartMoveAt indexPath: IndexPath) -> UIGestureRecognizer
+    func gridViewGestureToStartMoveAt(_ gridView: GridViewController) -> UIGestureRecognizer
 }
 
 public class GridViewController: UICollectionViewController, GridLayoutDelegate {
     
     public var gridConfiguration = GridConfiguration(slots: [[]])
     public var delegate: GridViewDelegate?
+    private var editingMode = false
+
+    lazy var gestureEditingModeStart: UIGestureRecognizer = { [unowned self] in
+        
+        let gesture = self.delegate!.gridViewGestureToStartMoveAt(self)
+        gesture.addTarget(self, action: #selector(startEditingMode))
+        
+        return gesture
+    }()
+    
+    lazy var gestureEditingModeStop: UITapGestureRecognizer = { [unowned self] in
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(stopEditingMode))
+        gesture.isEnabled = false
+        gesture.allowedPressTypes = [NSNumber(value: UIPressType.menu.rawValue)]
+        
+        return gesture
+    }()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -100,19 +105,16 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
             collectionView!.register(nib, forCellWithReuseIdentifier: className)
         }
         
+        // Add gesture to user can to move cells
+        self.collectionView!.addGestureRecognizer(gestureEditingModeStart)
+        self.collectionView!.addGestureRecognizer(gestureEditingModeStop)
+        
         // Set background color clear, for default
         self.view.backgroundColor = UIColor.clear
     }
     
-    /**
-     If you changed the *gridConfiguration* and want reload the grid, use this method.
-     **NEVER** use *reloadData()*
-    */
-    public func reloadGrid() {
-        (collectionView!.collectionViewLayout as! GridLayout).clearCache()
-        collectionView!.reloadData()
-    }
-    
+    ////
+    // Create and show the cells at grid
     override public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return gridConfiguration.slots.count
     }
@@ -121,13 +123,12 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         return gridConfiguration.slots[section].count
     }
     
-    var originalIndexPathToCell: [IndexPath: UICollectionViewCell] = [:]
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let slot = gridConfiguration.slots[indexPath.section][indexPath.row]
         var cell = collectionView.dequeueReusableCell(withReuseIdentifier: getClassName(of: slot.cell)!, for: indexPath) as! SlotableCell
         
-        //
+        // start cell
         cell.params = slot.params
         cell.load(params: slot.params)
         delegate!.setup(cell: cell, params: slot.params)
@@ -135,39 +136,42 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         //
         gridConfiguration.cellToIndexPath[cell as! UICollectionViewCell] = indexPath
         
-        //
-        originalIndexPathToCell[indexPath] = (cell as! UICollectionViewCell)
+        // add gesture to cell
+        if let cell = cell as? UICollectionViewCell,
+            let cellIndexPath = gridConfiguration.cellToIndexPath[cell],
+            delegate!.gridView(self, shouldMoveCellAt: cellIndexPath) {
+            
+            let gestureMoveCell = UIPanGestureRecognizer()
+            gestureMoveCell.addTarget(self, action: #selector(doRearrange))
+            //gestureMoveCell.isEnabled = false
+            cell.addGestureRecognizer(gestureMoveCell)
+        }
+        
+        (cell as! UICollectionViewCell).contentView.isUserInteractionEnabled = false
         
         //
         return cell as! UICollectionViewCell
     }
     
-    //
-    func getClassName(of any: Any) -> String? {
-        return "\(any)".components(separatedBy: ".").last
-    }
-    
-    //
-    public override func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
+    ////
+    // Focus
+    public override func collectionView(_ collectionView: UICollectionView, shouldUpdateFocusIn context: UICollectionViewFocusUpdateContext) -> Bool {
         
-        return true
+        if editingMode {
+            return false
+        } else {
+            return true
+        }
     }
     
     public override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         
         context.previouslyFocusedView?.layer.shadowOpacity = 0.0
         context.nextFocusedView?.layer.shadowOpacity = 1.0
-        
-        if let cell = context.nextFocusedView as? UICollectionViewCell,
-            let cellIndexPath = gridConfiguration.cellToIndexPath[cell],
-            delegate!.gridView(self, shouldMoveCellAt: cellIndexPath) {
-            
-            let gesture = delegate!.gridView(self, gestureToStartMoveAt: cellIndexPath)
-            gesture.addTarget(self, action: #selector(self.rearrange))
-            cell.addGestureRecognizer(gesture)
-        }
     }
     
+    ////
+    // Move cells
     private func indexPathToSlotableCell(_ indexPath: IndexPath) -> SlotableCell {
         for i in gridConfiguration.cellToIndexPath.enumerated() {
             if i.element.value == indexPath {
@@ -219,7 +223,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         return cellAffectedAtDestination
     }
     
-    private func move(cell cellTargetIndexPath: IndexPath) {
+    private func move(cell cellTargetIndexPath: IndexPath, to direction: MoveDirection, completion: @escaping () -> ()) {
         
         let cellTargetRowColumn = gridConfiguration.indexPathToRowColumn[cellTargetIndexPath]!
         let cellTarget = indexPathToSlotableCell(cellTargetIndexPath)
@@ -247,7 +251,6 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
             
             cellsAtRigthByTop = cellsAtRigthByTop.union(
                 gridConfiguration.getCellOf(column: index)
-                //gridLayout.getCellOf(column: index)
             )
         }
         
@@ -283,7 +286,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
             let mySideCells = sideCells(i)
             
             let x = mySideCells.map { current -> ((IndexPath), Int) in
-                let column = self.gridConfiguration.indexPathToRowColumn[current]!.column //self.gridLayout.indexPathToRowColumn[current]!.column
+                let column = self.gridConfiguration.indexPathToRowColumn[current]!.column
                 
                 return (current, column.upperBound - column.lowerBound)
             }
@@ -426,7 +429,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                         
                         self.gridConfiguration = newGridConfiguration
                         
-                        (cellTarget as! UICollectionViewCell).gestureRecognizers!.forEach { $0.isEnabled = true }
+                        completion()
                     }
                 )
                 
@@ -434,19 +437,65 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         )
     }
     
-    public func rearrange(_ cell: UITapGestureRecognizer) {
+    private func setEditingMode(enabled: Bool) {
         
-        guard cell.state == .ended else {
+        if enabled {
+            editingMode = true
+            gestureEditingModeStart.isEnabled = false
+            gestureEditingModeStop.isEnabled = true
+        } else {
+            editingMode = false
+            gestureEditingModeStart.isEnabled = true
+            gestureEditingModeStop.isEnabled = false
+        }
+    }
+    
+    func startEditingMode(_ gesture: UIGestureRecognizer) {
+        
+        collectionView!.visibleCells.forEach {
+            $0.startWiggle()
+        }
+        
+        setEditingMode(enabled: true)
+    }
+    
+    func stopEditingMode(_ gesture: UIGestureRecognizer) {
+        collectionView!.visibleCells.forEach {
+            $0.stopWiggle()
+        }
+        
+        setEditingMode(enabled: false)
+    }
+    
+    func doRearrange(_ gesture: UIPanGestureRecognizer) {
+        
+        guard gesture.state == .ended, editingMode == true else {
             return
         }
         
-        let indexPath = gridConfiguration.cellToIndexPath[cell.view! as! UICollectionViewCell]!
+        let indexPath = gridConfiguration.cellToIndexPath[gesture.view! as! UICollectionViewCell]!
+        gesture.isEnabled = false
         
-        print(getParams(of: cell.view! as! UICollectionViewCell))
-        cell.view!.gestureRecognizers!.forEach { $0.isEnabled = false }
-        move(cell: indexPath)
+        move(cell: indexPath, to: gesture.direction) {
+            gesture.isEnabled = true
+        }
     }
     
+    ////
+    // public functions to user
+    
+    /**
+     If you changed the *gridConfiguration* and want reload the grid, use this method.
+     **NEVER** use *reloadData()*
+     */
+    public func reloadGrid() {
+        (collectionView!.collectionViewLayout as! GridLayout).clearCache()
+        collectionView!.reloadData()
+    }
+    
+    /**
+     Return the params of one cell
+     */
     public func getParams(of cell: UICollectionViewCell) -> [String: Any] {
         let indexPath = gridConfiguration.cellToIndexPath[cell]!
         let cellTarget = indexPathToSlotableCell(indexPath)

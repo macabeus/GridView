@@ -15,6 +15,7 @@
 		898E4FAD1EDEFA68006A826B /* GridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5E1EB38F8700B1A333 /* GridController.swift */; };
 		898E4FAE1EDEFA6A006A826B /* GridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898E4F751EDD05C3006A826B /* GridConfiguration.swift */; };
 		898E4FAF1EDEFA6D006A826B /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */; };
+		89FC8EC11EE36AC400845676 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FC8EC01EE36AC400845676 /* Extensions.swift */; };
 		F52C3F0C5FCC8D9CB1E10533 /* Pods_GridView_GridViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D72A67026D9466892EF3EDA /* Pods_GridView_GridViewTests.framework */; };
 		F82715807962B75D1008F681 /* Pods_GridView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F805947CD4D71E9436CAAEA /* Pods_GridView.framework */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,7 @@
 		898E4FA41EDEF974006A826B /* GridViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewTests.swift; sourceTree = "<group>"; };
 		898E4FA61EDEF974006A826B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89D4A7791EB6EA4E0006E05D /* GridView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GridView.podspec; path = ../GridView.podspec; sourceTree = "<group>"; };
+		89FC8EC01EE36AC400845676 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C22166B3B15CE907724B34A4 /* Pods-GridView-GridViewTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridView-GridViewTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-GridView-GridViewTests/Pods-GridView-GridViewTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 				892FDF5E1EB38F8700B1A333 /* GridController.swift */,
 				898E4F751EDD05C3006A826B /* GridConfiguration.swift */,
 				892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */,
+				89FC8EC01EE36AC400845676 /* Extensions.swift */,
 			);
 			path = GridView;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				898E4F771EDD05D8006A826B /* GridConfiguration.swift in Sources */,
 				892FDF601EB38F9300B1A333 /* GridController.swift in Sources */,
 				892FDF5D1EB38E9100B1A333 /* GridLayout.swift in Sources */,
+				89FC8EC11EE36AC400845676 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
