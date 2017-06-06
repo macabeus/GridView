@@ -1,6 +1,6 @@
 //
 //  MainTvController.swift
-//  Example-tvOS
+//  Example
 //
 //  Created by Bruno Macabeus Aquino on 27/04/17.
 //  Copyright © 2017 Bruno Macabeus Aquino. All rights reserved.
@@ -21,11 +21,21 @@ class MainTvController: UIViewController {
         
         // set the cells to show in grid 📌
         let slots: [[Slot]] = [
+            [Slot(cell: CellBlue.self, params: [:]), Slot(cell: CellBlue.self, params: [:])],
+            [Slot(cell: CellYellow.self, params: [:]), Slot(cell: CellBlue.self, params: [:])]
+        ]
+        
+        /*let slots: [[Slot]] = [
+            [Slot(cell: CellGreen.self.self, params: [:]), Slot(cell: CellBlue.self, params: [:]), Slot(cell: CellBlue.self, params: [:]), Slot(cell: CellBlue.self, params: [:])],
+            [Slot(cell: CellYellow.self, params: [:]), Slot(cell: CellBlue.self, params: [:])]
+        ]*/
+        
+        /*let slots: [[Slot]] = [
             [Slot(cell: CellBlue.self, params: ["p": 0]), Slot(cell: CellGreen.self, params: ["p": 1]), Slot(cell: CellBlue.self, params: ["p": 2])],
             [Slot(cell: CellGreen.self, params: ["p": 3]), Slot(cell: CellBlue.self, params: ["p": 4])],
             [Slot(cell: CellYellow.self, params: ["p": 5])],
             [Slot(cell: CellBlue.self, params: ["p": 6]), Slot(cell: CellBlue.self, params: ["p": 7]), Slot(cell: CellBlue.self, params: ["p": 8])]
-        ]
+        ]*/
         
         /*let slots: [[Slot]] = [
             [Slot(cell: CellMap.self, params: [:]), Slot(cell: CellChart.self, params: [:])],
@@ -72,10 +82,11 @@ extension MainTvController: GridViewDelegate {
         return true
     }
     
-    func gridView(_ gridView: GridViewController, gestureToStartMoveAt indexPath: IndexPath) -> UIGestureRecognizer {
+    func gridViewGestureToStartMoveAt(_ gridView: GridViewController) -> UIGestureRecognizer {
         
-        let gesture = UITapGestureRecognizer()
-        gesture.numberOfTapsRequired = 2
+        let gesture = UILongPressGestureRecognizer()
+        gesture.minimumPressDuration = 0.75
+        
         return gesture
     }
 }

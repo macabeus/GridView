@@ -140,11 +140,6 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         if let cell = cell as? UICollectionViewCell,
             let cellIndexPath = gridConfiguration.cellToIndexPath[cell],
             delegate!.gridView(self, shouldMoveCellAt: cellIndexPath) {
-            
-            let gestureMoveCell = UIPanGestureRecognizer()
-            gestureMoveCell.addTarget(self, action: #selector(doRearrange))
-            //gestureMoveCell.isEnabled = false
-            cell.addGestureRecognizer(gestureMoveCell)
         }
         
         (cell as! UICollectionViewCell).contentView.isUserInteractionEnabled = false
@@ -487,9 +482,20 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
     
     func startEditingMode(_ gesture: UIGestureRecognizer) {
         
+        guard (gesture as? UILongPressGestureRecognizer != nil && gesture.state == .began) ||
+            (gesture.state == .ended) else {
+                
+                return
+        }
+        
         collectionView!.visibleCells.forEach {
             $0.startWiggle()
         }
+        
+        let currentFocusedCell = UIScreen.main.focusedItem as! UICollectionViewCell
+        let gestureMoveCell = UIPanGestureRecognizer()
+        gestureMoveCell.addTarget(self, action: #selector(doRearrange))
+        currentFocusedCell.addGestureRecognizer(gestureMoveCell)
         
         setEditingMode(enabled: true)
     }
@@ -498,6 +504,10 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         collectionView!.visibleCells.forEach {
             $0.stopWiggle()
         }
+        
+        let currentFocusedCell = UIScreen.main.focusedItem as! UICollectionViewCell
+        let gestureMoveCell = currentFocusedCell.gestureRecognizers!.first(where: { ($0 as? UIPanGestureRecognizer) != nil })! // todo: this any to get the gesture created in startEditingMode(_:) is unsafe!
+        currentFocusedCell.removeGestureRecognizer(gestureMoveCell)
         
         setEditingMode(enabled: false)
     }
