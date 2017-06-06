@@ -12,37 +12,34 @@ import UIKit // todo: GridConfiguration need be agnostic to UIKit!
 public class GridConfiguration {
     
     let slots: [[Slot]]
-    var parseSlotStep: [ParseSlotStep]?
-    var gridNumberOfRows: Int?
-    var gridNumberOfColumns: Int?
-    private var cellPerRow: [Int: [IndexPath]] = [:]
-    private var cellPerColumn: [Int: [IndexPath]] = [:]
+    let parseSlotStep: [ParseSlotStep]
+    let gridNumberOfRows: Int
+    let gridNumberOfColumns: Int
+    let indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)]
+    private let cellPerRow: [Int: [IndexPath]]
+    private let cellPerColumn: [Int: [IndexPath]]
     var cellToIndexPath: [UICollectionViewCell: IndexPath] = [:]
-    var indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)] = [:]
     
-    public init(slots: [[Slot]]) {
+    private init(slots: [[Slot]], parseSlotStep: [ParseSlotStep], gridNumberOfRows: Int, gridNumberOfColumns: Int, indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)], cellPerRow: [Int: [IndexPath]], cellPerColumn: [Int: [IndexPath]]) {
         
         self.slots = slots
-        let parseSlotsResult = parseSlots()
-        
-        self.parseSlotStep = parseSlotsResult.0
-        self.gridNumberOfRows = parseSlotsResult.1.matrix.count
-        self.gridNumberOfColumns = parseSlotsResult.1.matrix[0].count
+        self.parseSlotStep = parseSlotStep
+        self.gridNumberOfRows = gridNumberOfRows
+        self.gridNumberOfColumns = gridNumberOfColumns
+        self.indexPathToRowColumn = indexPathToRowColumn
+        self.cellPerRow = cellPerRow
+        self.cellPerColumn = cellPerColumn
     }
     
-    enum ParseSlotStep {
-        case cell(row: Int, collumn: Int)
-        case newRow()
-    }
-    
-    fileprivate func parseSlots() -> ([ParseSlotStep], MatrixBool) {
-        
+    public class func create(slots: [[Slot]]) -> GridConfiguration {
+
+        ////
+        // parse
         var results: [ParseSlotStep] = []
-        cellPerRow = [:]
-        cellPerColumn = [:]
-        indexPathToRowColumn = [:]
+        var cellPerRow: [Int: [IndexPath]] = [:]
+        var cellPerColumn: [Int: [IndexPath]] = [:]
+        var indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)] = [:]
         
-        //
         let slotsFilleds = MatrixBool(initialWidth: 1, initialHeight: 1)
         
         // fill the collection view
@@ -76,7 +73,7 @@ public class GridConfiguration {
                 indexPathSection += 1
                 
                 // set size of cell
-                let slotSize = cellSlotSize(section: section, row: item)
+                let slotSize = cellSlotSize(slots: slots, section: section, row: item)
                 let slotWidth = slotSize.width
                 let slotHeight = slotSize.height
                 
@@ -98,9 +95,6 @@ public class GridConfiguration {
                 while slotsFilleds.matrix[section][column...column + slotWidth - 1].contains(true) {
                     column += 1
                     columnsFill += 1
-                    if column == gridNumberOfColumns {
-                        print("[WARNING GridLayout] Célula de \(section):\(item) ultrapassou os limites!")
-                    }
                 }
                 
                 // atualizar yOffset e contentHeight
@@ -109,10 +103,10 @@ public class GridConfiguration {
                         slotsFilleds.matrix[section + i][column + j] = true
                     }
                 }
-
+                
                 //
                 results.append(.cell(row: section, collumn: column))
-
+                
                 //
                 let indexPath = IndexPath(item: indexPathSection, section: indexPathItem)
                 for i in 0..<slotWidth {
@@ -146,7 +140,21 @@ public class GridConfiguration {
             indexPathItem += 1
         }
         
-        return (results, slotsFilleds)
+        //
+        return GridConfiguration(
+            slots: slots,
+            parseSlotStep: results,
+            gridNumberOfRows: slotsFilleds.matrix.count,
+            gridNumberOfColumns: slotsFilleds.matrix[0].count,
+            indexPathToRowColumn: indexPathToRowColumn,
+            cellPerRow: cellPerRow,
+            cellPerColumn: cellPerColumn
+        )
+    }
+    
+    enum ParseSlotStep {
+        case cell(row: Int, collumn: Int)
+        case newRow()
     }
     
     func getCellOf(column: Int) -> Set<IndexPath> {
@@ -160,6 +168,12 @@ public class GridConfiguration {
     /**
      Return the size of a cell
      */
+    class func cellSlotSize(slots: [[Slot]], section: Int, row: Int) -> (width: Int, height: Int) {
+        let slotCell = slots[section][row].cell
+        
+        return (slotCell.slotWidth, slotCell.slotHeight)
+    }
+    
     func cellSlotSize(section: Int, row: Int) -> (width: Int, height: Int) {
         let slotCell = slots[section][row].cell
         

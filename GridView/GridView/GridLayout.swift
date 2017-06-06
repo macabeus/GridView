@@ -28,11 +28,11 @@ public class GridLayout: UICollectionViewLayout {
     }
     
     public var numberOfColumns: Int {
-        return delegate.gridConfiguration.gridNumberOfColumns!
+        return delegate.gridConfiguration.gridNumberOfColumns
     }
     
     public var numberOfRows: Int {
-        return delegate.gridConfiguration.gridNumberOfRows!
+        return delegate.gridConfiguration.gridNumberOfRows
     }
     
     public var columnWidth: CGFloat {
@@ -57,7 +57,7 @@ public class GridLayout: UICollectionViewLayout {
             var indexPathSection = -1
             var indexPathItem = 0
             var yOffsetMiniumForNewRow: CGFloat = 0
-            for i in delegate.gridConfiguration.parseSlotStep! {
+            for i in delegate.gridConfiguration.parseSlotStep {
                 
                 switch i {
                     

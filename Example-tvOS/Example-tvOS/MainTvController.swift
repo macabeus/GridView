@@ -43,7 +43,7 @@ class MainTvController: UIViewController {
             [Slot(cell: CellCharacter.self, params: ["race": "troll"]), Slot(cell: CellCharacter.self, params: ["race": "elves"]), Slot(cell: CellCharacter.self, params: ["race": "undead"]), Slot(cell: CellCharacter.self, params: ["race": "merfolk"])]
         ]*/
         
-        containerGrid!.gridConfiguration = GridConfiguration(slots: slots)
+        containerGrid!.gridConfiguration = GridConfiguration.create(slots: slots)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

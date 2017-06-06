@@ -68,7 +68,7 @@ public protocol GridViewDelegate {
 
 public class GridViewController: UICollectionViewController, GridLayoutDelegate {
     
-    public var gridConfiguration = GridConfiguration(slots: [[]])
+    public var gridConfiguration = GridConfiguration.create(slots: [[]])
     public var delegate: GridViewDelegate?
     private var editingMode = false
 
@@ -428,14 +428,14 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                             newSlots.append(slots)
                         }
                         
-                        let newGridConfiguration = GridConfiguration(slots: newSlots)
+                        let newGridConfiguration = GridConfiguration.create(slots: newSlots)
                         
                         var cellsArray = (cellsPerRow.flatMap { $0 }).makeIterator()
                         
                         var indexPathSection = -1
                         var indexPathItem = 0
                         
-                        for mySlot in self.gridConfiguration.parseSlotStep! {
+                        for mySlot in self.gridConfiguration.parseSlotStep {
                             
                             indexPathSection += 1
                             
