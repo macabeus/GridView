@@ -265,6 +265,41 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
             gridConfiguration.indexPathToRowColumn[$0]!.row
         }
         
+        if rowsAffectDest.count == 0 {
+            // if haven't any cell in dest, then, the move is invalid
+            let cell = self.indexPathToSlotableCell(cellTargetIndexPath) as! UICollectionViewCell
+            
+            UIView.animate(
+                withDuration: 0.3,
+                animations: {
+                    
+                    cell.frame.origin = CGPoint(
+                        x: cell.frame.origin.x + 150,
+                        y: cell.frame.origin.y
+                    )
+                    
+                },
+                completion: { _ -> Void in
+                    
+                    UIView.animate(
+                        withDuration: 0.3,
+                        animations: {
+                            
+                            cell.frame.origin = CGPoint(
+                                x: cell.frame.origin.x - 150,
+                                y: cell.frame.origin.y
+                            )
+                            
+                        }
+                    )
+                    
+                    completion()
+                }
+            )
+            
+            return
+        }
+        
         let rangeRowsAffectDest = rowsAffectDest.reduce(rowsAffectDest[0]) { oldValue, currentValue in
             let lowerBound = min(oldValue.lowerBound, currentValue.lowerBound)
             let upperBound = max(oldValue.upperBound, currentValue.upperBound)
