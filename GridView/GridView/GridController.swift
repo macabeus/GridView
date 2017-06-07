@@ -324,26 +324,26 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
             animations: {
                 
                 for i in cellToSwap {
-                    //
-                    let cell = self.indexPathToSlotableCell(i.origin) as! UICollectionViewCell
-                    let cellDest =
-                        (self.indexPathToSlotableCell(i.dest) as! UICollectionViewCell).frame.origin.x +
-                        (CGFloat(i.destColumnSize) * self.gridLayout.columnWidth)
+                    let cellOrigin = self.indexPathToSlotableCell(i.origin) as! UICollectionViewCell
+                    let cellDest = self.indexPathToSlotableCell(i.dest) as! UICollectionViewCell
                     
                     frameOriginToDest.append(
                         (
-                            cell: cell,
-                            dest: CGPoint(x: cellDest, y: cell.frame.origin.y)
+                            cell: cellOrigin,
+                            dest: CGPoint(
+                                x: cellOrigin.frame.origin.x + cellDest.frame.size.width + self.gridLayout.cellPadding * 2,
+                                y: cellOrigin.frame.origin.y
+                            )
                         )
                     )
                     
-                    //
-                    let cellDestAffect = self.indexPathToSlotableCell(i.dest) as! UICollectionViewCell
-                    
                     frameOriginToDest.append(
                         (
-                            cell: cellDestAffect,
-                            dest: CGPoint(x: cell.frame.origin.x, y: cellDestAffect.frame.origin.y)
+                            cell: cellDest,
+                            dest: CGPoint(
+                                x: cellOrigin.frame.origin.x,
+                                y: cellDest.frame.origin.y
+                            )
                         )
                     )
                 }
