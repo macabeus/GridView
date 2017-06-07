@@ -19,7 +19,7 @@ public class GridLayout: UICollectionViewLayout {
     
     var cellPadding: CGFloat = 6.0
     
-    private var cache = [UICollectionViewLayoutAttributes]()
+    var cache = [UICollectionViewLayoutAttributes]()
     
     private var contentHeight: CGFloat  = 0.0
     private var contentWidth: CGFloat {

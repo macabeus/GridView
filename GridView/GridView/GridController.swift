@@ -145,7 +145,10 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         }
         
         (cell as! UICollectionViewCell).contentView.isUserInteractionEnabled = false
-                
+        
+        // for some reason, in some cases, the collectionview reuse the previus cell frame, and, we don't want this behavior; we want use the frame setted by GridLayout
+        (cell as! UICollectionViewCell).frame = gridLayout.cache.first(where: { $0.indexPath == indexPath })!.frame
+        
         //
         return cell as! UICollectionViewCell
     }
