@@ -20,22 +20,22 @@ class MainTvController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.4756349325, green: 0.4756467342, blue: 0.4756404161, alpha: 1)
         
         // set the cells to show in grid 📌
-        let slots: [[Slot]] = [
+        /*let slots: [[Slot]] = [
             [Slot(cell: CellBlue.self, params: [:]), Slot(cell: CellBlue.self, params: [:])],
             [Slot(cell: CellYellow.self, params: [:]), Slot(cell: CellBlue.self, params: [:])]
-        ]
+        ]*/
         
         /*let slots: [[Slot]] = [
             [Slot(cell: CellGreen.self.self, params: [:]), Slot(cell: CellBlue.self, params: [:]), Slot(cell: CellBlue.self, params: [:]), Slot(cell: CellBlue.self, params: [:])],
             [Slot(cell: CellYellow.self, params: [:]), Slot(cell: CellBlue.self, params: [:])]
         ]*/
         
-        /*let slots: [[Slot]] = [
+        let slots: [[Slot]] = [
             [Slot(cell: CellBlue.self, params: ["p": 0]), Slot(cell: CellGreen.self, params: ["p": 1]), Slot(cell: CellBlue.self, params: ["p": 2])],
             [Slot(cell: CellGreen.self, params: ["p": 3]), Slot(cell: CellBlue.self, params: ["p": 4])],
             [Slot(cell: CellYellow.self, params: ["p": 5])],
             [Slot(cell: CellBlue.self, params: ["p": 6]), Slot(cell: CellBlue.self, params: ["p": 7]), Slot(cell: CellBlue.self, params: ["p": 8])]
-        ]*/
+        ]
         
         /*let slots: [[Slot]] = [
             [Slot(cell: CellMap.self, params: [:]), Slot(cell: CellChart.self, params: [:])],
@@ -56,6 +56,7 @@ class MainTvController: UIViewController {
 }
 
 extension MainTvController: GridViewDelegate {
+
     func getCellToRegister() -> [SlotableCell.Type] {
         // we need register cell's class, then, send it's where 🖋
         return [CellCharacter.self, CellLogs.self, CellMap.self, CellChart.self,
@@ -88,5 +89,10 @@ extension MainTvController: GridViewDelegate {
         gesture.minimumPressDuration = 0.75
         
         return gesture
+    }
+    
+    func gridView(_ gridView: GridViewController, newGridConfiguration: GridConfiguration) {
+        // the user moved one or more cells of grid
+        print(newGridConfiguration.slots)
     }
 }

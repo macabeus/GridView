@@ -11,10 +11,10 @@ import UIKit // todo: GridConfiguration need be agnostic to UIKit!
 
 public class GridConfiguration {
     
-    let slots: [[Slot]]
-    let parseSlotStep: [ParseSlotStep]
-    let gridNumberOfRows: Int
-    let gridNumberOfColumns: Int
+    public let slots: [[Slot]]
+    public let parseSlotStep: [ParseSlotStep]
+    public let gridNumberOfRows: Int
+    public let gridNumberOfColumns: Int
     let indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)]
     private let cellPerRow: [Int: [IndexPath]]
     private let cellPerColumn: [Int: [IndexPath]]
@@ -152,7 +152,7 @@ public class GridConfiguration {
         )
     }
     
-    enum ParseSlotStep {
+    public enum ParseSlotStep {
         case cell(row: Int, collumn: Int)
         case newRow()
     }

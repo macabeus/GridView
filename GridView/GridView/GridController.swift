@@ -64,6 +64,8 @@ public protocol GridViewDelegate {
     func gridView(_ gridView: GridViewController, shouldMoveCellAt indexPath: IndexPath) -> Bool
     
     func gridViewGestureToStartMoveAt(_ gridView: GridViewController) -> UIGestureRecognizer
+    
+    func gridView(_ gridView: GridViewController, newGridConfiguration: GridConfiguration)
 }
 
 public class GridViewController: UICollectionViewController, GridLayoutDelegate {
@@ -143,7 +145,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         }
         
         (cell as! UICollectionViewCell).contentView.isUserInteractionEnabled = false
-        
+                
         //
         return cell as! UICollectionViewCell
     }
@@ -458,7 +460,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                         }
                         
                         self.gridConfiguration = newGridConfiguration
-                        
+                        self.delegate!.gridView(self, newGridConfiguration: newGridConfiguration)
                         completion()
                     }
                 )
