@@ -302,26 +302,25 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         ////
         // animate
         
-        var cellToSwap: [(origin: IndexPath, dest: IndexPath, destColumnSize: Int)] = []
-        
-        for i in cellsAffectOrigin {
-            let mySideCells = sideCells(i)
-            
-            let x = mySideCells.map { current -> ((IndexPath), Int) in
-                let column = self.gridConfiguration.indexPathToRowColumn[current]!.column
+        let cellToSwap: [(origin: IndexPath, dest: IndexPath)] =
+            cellsAffectOrigin.map { indexPath in
+                let mySideCells = sideCells(indexPath)
                 
-                return (current, column.upperBound - column.lowerBound)
+                let x = mySideCells.map { current -> (indexPath: IndexPath, columnSize: Int) in
+                    let column = self.gridConfiguration.indexPathToRowColumn[current]!.column
+                    
+                    return (indexPath: current, columnSize: column.upperBound - column.lowerBound)
+                }
+                let largest = x.max(by: { $0.columnSize < $1.columnSize })!
+                
+                return (origin: indexPath, dest: largest.indexPath)
             }
-            let largest = x.max(by: { $0.1 < $1.1 })!
-            
-            cellToSwap.append((origin: i, dest: largest.0, destColumnSize: largest.1))
-        }
-        
-        var frameOriginToDest: [(cell: UICollectionViewCell, dest: CGPoint)] = []
         
         UIView.animate(
             withDuration: 0.5,
             animations: {
+                
+                var frameOriginToDest: [(cell: UICollectionViewCell, dest: CGPoint)] = []
                 
                 for i in cellToSwap {
                     let cellOrigin = self.indexPathToSlotableCell(i.origin) as! UICollectionViewCell
