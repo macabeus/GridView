@@ -59,6 +59,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
     public var gridConfiguration = GridConfiguration.create(slots: Slots(slots: [[]]))
     public var delegate: GridViewDelegate?
     private var editingMode = false
+    private var dictCellToIndexPath: [UICollectionViewCell: IndexPath] = [:]
 
     lazy var gestureEditingModeStart: UIGestureRecognizer = { [unowned self] in
         
@@ -122,11 +123,11 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
         delegate!.setup(cell: cell, params: slot.params)
         
         //
-        gridConfiguration.cellToIndexPath[cell as! UICollectionViewCell] = indexPath
+        dictCellToIndexPath[cell as! UICollectionViewCell] = indexPath
         
         // add gesture to cell
         if let cell = cell as? UICollectionViewCell,
-            let cellIndexPath = gridConfiguration.cellToIndexPath[cell],
+            let cellIndexPath = dictCellToIndexPath[cell],
             delegate!.gridView(self, shouldMoveCellAt: cellIndexPath) {
         }
         
@@ -159,7 +160,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
     ////
     // Move cells
     private func indexPathToSlotableCell(_ indexPath: IndexPath) -> SlotableCell {
-        for i in gridConfiguration.cellToIndexPath.enumerated() {
+        for i in dictCellToIndexPath.enumerated() {
             if i.element.value == indexPath {
                 return i.element.key as! SlotableCell
             }
@@ -435,7 +436,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                                 
                                 let myCell = cellsArray.next()!
                                 
-                                newGridConfiguration.cellToIndexPath[myCell] = IndexPath(
+                                self.dictCellToIndexPath[myCell] = IndexPath(
                                     item: indexPathSection,
                                     section: indexPathItem
                                 )
@@ -509,7 +510,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
             return
         }
         
-        let indexPath = gridConfiguration.cellToIndexPath[gesture.view! as! UICollectionViewCell]!
+        let indexPath = dictCellToIndexPath[gesture.view! as! UICollectionViewCell]!
         gesture.isEnabled = false
         
         move(cell: indexPath, to: gesture.direction) {
@@ -533,7 +534,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
      Return the params of one cell
      */
     public func getParams(of cell: UICollectionViewCell) -> [String: Any] {
-        let indexPath = gridConfiguration.cellToIndexPath[cell]!
+        let indexPath = dictCellToIndexPath[cell]!
         let cellTarget = indexPathToSlotableCell(indexPath)
         
         return cellTarget.params

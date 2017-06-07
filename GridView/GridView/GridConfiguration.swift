@@ -6,8 +6,7 @@
 //  Copyright © 2017 Bruno Macabeus Aquino. All rights reserved.
 //
 
-//import Foundation
-import UIKit // todo: GridConfiguration need be agnostic to UIKit!
+import Foundation
 
 public class GridConfiguration {
     
@@ -18,7 +17,6 @@ public class GridConfiguration {
     let indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)]
     private let cellPerRow: [Int: [IndexPath]]
     private let cellPerColumn: [Int: [IndexPath]]
-    var cellToIndexPath: [UICollectionViewCell: IndexPath] = [:]
     
     private init(slots: Slots, parseSlotStep: [ParseSlotStep], gridNumberOfRows: Int, gridNumberOfColumns: Int, indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)], cellPerRow: [Int: [IndexPath]], cellPerColumn: [Int: [IndexPath]]) {
         
