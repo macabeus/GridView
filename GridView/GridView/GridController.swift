@@ -9,20 +9,6 @@
 import UIKit
 
 /**
- Struct to encapsulate the cell with yours parameters, to show in grid.
- The parameters are passed to *setup(cell:params)* and *load(params)* methods 
- */
-public struct Slot {
-    public let cell: SlotableCell.Type
-    public let params: [String: Any]
-    
-    public init(cell: SlotableCell.Type, params: [String: Any]) {
-        self.cell = cell
-        self.params = params
-    }
-}
-
-/**
  If do you want that a cell to be displayed in the grid, you need to subscriber the SlotableCell protocol.
  You also need create a xib with UI of this cell. The xib, and cell's indentifier in xib file, **need** have the same name of the class.
  */
@@ -70,7 +56,7 @@ public protocol GridViewDelegate {
 
 public class GridViewController: UICollectionViewController, GridLayoutDelegate {
     
-    public var gridConfiguration = GridConfiguration.create(slots: [[]])
+    public var gridConfiguration = GridConfiguration.create(slots: Slots(slots: [[]]))
     public var delegate: GridViewDelegate?
     private var editingMode = false
 
@@ -118,16 +104,16 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
     ////
     // Create and show the cells at grid
     override public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return gridConfiguration.slots.count
+        return gridConfiguration.slots.numberOfSections()
     }
     
     override public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gridConfiguration.slots[section].count
+        return gridConfiguration.slots.numberOfItemsAt(section: section)
     }
     
     override public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let slot = gridConfiguration.slots[indexPath.section][indexPath.row]
+        let slot = gridConfiguration.slots.slotAt(section: indexPath.section, item: indexPath.item)
         var cell = collectionView.dequeueReusableCell(withReuseIdentifier: getClassName(of: slot.cell)!, for: indexPath) as! SlotableCell
         
         // start cell
@@ -433,7 +419,7 @@ public class GridViewController: UICollectionViewController, GridLayoutDelegate 
                             newSlots.append(slots)
                         }
                         
-                        let newGridConfiguration = GridConfiguration.create(slots: newSlots)
+                        let newGridConfiguration = GridConfiguration.create(slots: Slots(slots: newSlots))
                         
                         var cellsArray = (cellsPerRow.flatMap { $0 }).makeIterator()
                         

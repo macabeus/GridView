@@ -65,7 +65,7 @@ public class GridLayout: UICollectionViewLayout {
                     indexPathSection += 1
                     
                     // set size of cell
-                    let slotSize = delegate.gridConfiguration.cellSlotSize(section: row, row: indexPathSection)
+                    let slotSize = delegate.gridConfiguration.slots.slotSizeAt(section: row, item: indexPathSection)
                     let slotWidth = slotSize.width
                     let slotHeight = slotSize.height
                     

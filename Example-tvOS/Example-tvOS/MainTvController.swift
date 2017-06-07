@@ -43,7 +43,7 @@ class MainTvController: UIViewController {
             [Slot(cell: CellCharacter.self, params: ["race": "troll"]), Slot(cell: CellCharacter.self, params: ["race": "elves"]), Slot(cell: CellCharacter.self, params: ["race": "undead"]), Slot(cell: CellCharacter.self, params: ["race": "merfolk"])]
         ]*/
         
-        containerGrid!.gridConfiguration = GridConfiguration.create(slots: slots)
+        containerGrid!.gridConfiguration = GridConfiguration.create(slots: Slots(slots: slots))
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -93,6 +93,5 @@ extension MainTvController: GridViewDelegate {
     
     func gridView(_ gridView: GridViewController, newGridConfiguration: GridConfiguration) {
         // the user moved one or more cells of grid
-        print(newGridConfiguration.slots)
     }
 }

@@ -11,7 +11,7 @@ import UIKit // todo: GridConfiguration need be agnostic to UIKit!
 
 public class GridConfiguration {
     
-    public let slots: [[Slot]]
+    public let slots: Slots
     public let parseSlotStep: [ParseSlotStep]
     public let gridNumberOfRows: Int
     public let gridNumberOfColumns: Int
@@ -20,7 +20,7 @@ public class GridConfiguration {
     private let cellPerColumn: [Int: [IndexPath]]
     var cellToIndexPath: [UICollectionViewCell: IndexPath] = [:]
     
-    private init(slots: [[Slot]], parseSlotStep: [ParseSlotStep], gridNumberOfRows: Int, gridNumberOfColumns: Int, indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)], cellPerRow: [Int: [IndexPath]], cellPerColumn: [Int: [IndexPath]]) {
+    private init(slots: Slots, parseSlotStep: [ParseSlotStep], gridNumberOfRows: Int, gridNumberOfColumns: Int, indexPathToRowColumn: [IndexPath: (row: CountableClosedRange<Int>, column: CountableClosedRange<Int>)], cellPerRow: [Int: [IndexPath]], cellPerColumn: [Int: [IndexPath]]) {
         
         self.slots = slots
         self.parseSlotStep = parseSlotStep
@@ -31,7 +31,7 @@ public class GridConfiguration {
         self.cellPerColumn = cellPerColumn
     }
     
-    public class func create(slots: [[Slot]]) -> GridConfiguration {
+    public class func create(slots: Slots) -> GridConfiguration {
 
         ////
         // parse
@@ -49,7 +49,7 @@ public class GridConfiguration {
         var column: Int
         var columnsFill: Int
         
-        for section in 0..<slots.count {
+        for section in 0..<slots.numberOfSections() {
             column = 0
             columnsFill = 0
             
@@ -57,7 +57,7 @@ public class GridConfiguration {
                 slotsFilleds.growHeight(1)
             }
             
-            if slots[section].count > 0 {
+            if slots.numberOfItemsAt(section: section) > 0 {
                 // get the first column with free space
                 while slotsFilleds.matrix[section][columnsFill] {
                     columnsFill += 1
@@ -69,11 +69,11 @@ public class GridConfiguration {
             }
             
             //
-            for item in 0..<slots[section].count {
+            for item in 0..<slots.numberOfItemsAt(section: section) {
                 indexPathSection += 1
                 
                 // set size of cell
-                let slotSize = cellSlotSize(slots: slots, section: section, row: item)
+                let slotSize = slots.slotSizeAt(section: section, item: item)
                 let slotWidth = slotSize.width
                 let slotHeight = slotSize.height
                 
@@ -163,21 +163,6 @@ public class GridConfiguration {
     
     func getCellOf(row: Int) -> Set<IndexPath> {
         return Set(cellPerRow[row] ?? [])
-    }
-
-    /**
-     Return the size of a cell
-     */
-    class func cellSlotSize(slots: [[Slot]], section: Int, row: Int) -> (width: Int, height: Int) {
-        let slotCell = slots[section][row].cell
-        
-        return (slotCell.slotWidth, slotCell.slotHeight)
-    }
-    
-    func cellSlotSize(section: Int, row: Int) -> (width: Int, height: Int) {
-        let slotCell = slots[section][row].cell
-        
-        return (slotCell.slotWidth, slotCell.slotHeight)
     }
 }
 
