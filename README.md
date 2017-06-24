@@ -165,3 +165,10 @@ The GridView **always** show all cells, and set in each cell a proportional size
 
 When GridView will draw a cell, check if have a enough space in first slot. If have, draw. If haven't, check in the second slot, and so on.<br>
 The total of columns is calculated at runtime.
+
+---
+
+**Maintainer**:
+
+> [macabeus](http://macalogs.com.br/) &nbsp;&middot;&nbsp;
+> GitHub [@macabeus](https://github.com/macabeus)
