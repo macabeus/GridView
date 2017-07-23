@@ -14,8 +14,9 @@ class CellSalmon: UICollectionViewCell, SlotableCell {
     static let slotWidth = 2
     static let slotHeight = 1
     static let myNib = UINib(nibName: "CellSalmon", bundle: nil)
+    var slotParams: [String : Any] = [:]
     
-    func load(params: [String: Any]) {
+    func load() {
         
     }
 }

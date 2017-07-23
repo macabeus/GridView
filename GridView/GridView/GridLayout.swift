@@ -10,25 +10,7 @@ import UIKit
 
 protocol GridLayoutDelegate {
     
-    /**
-     Return length of row with max length
-     */
-    func maxRow() -> Int
-    
-    /**
-     Return the size of a cell
-    */
-    func cellSlotSize(section: Int, row: Int) -> (width: Int, height: Int)
-    
-    /**
-     Return total number of rows
-    */
-    func gridNumberOfRows() -> Int
-
-    /**
-     Return total number of columns
-     */
-    func gridNumberOfColumns() -> Int
+    var gridConfiguration: GridConfiguration { get }
 }
 
 public class GridLayout: UICollectionViewLayout {
@@ -37,7 +19,7 @@ public class GridLayout: UICollectionViewLayout {
     
     var cellPadding: CGFloat = 6.0
     
-    private var cache = [UICollectionViewLayoutAttributes]()
+    var cache = [UICollectionViewLayoutAttributes]()
     
     private var contentHeight: CGFloat  = 0.0
     private var contentWidth: CGFloat {
@@ -45,48 +27,45 @@ public class GridLayout: UICollectionViewLayout {
         return collectionView!.bounds.width - (insets.left + insets.right)
     }
     
+    public var numberOfColumns: Int {
+        return delegate.gridConfiguration.gridNumberOfColumns
+    }
+    
+    public var numberOfRows: Int {
+        return delegate.gridConfiguration.gridNumberOfRows
+    }
+    
+    public var columnWidth: CGFloat {
+        return contentWidth / CGFloat(numberOfColumns)
+    }
+    
+    public var columnRow: CGFloat {
+        return (collectionView!.bounds.height / CGFloat(numberOfRows)) - cellPadding * CGFloat(numberOfRows)
+    }
+    
     override public func prepare() {
-        let numberOfColumns = delegate.gridNumberOfColumns()
-        let numberOfRows = delegate.gridNumberOfRows()
         
         if cache.isEmpty {
             // initialize variables with the dimensions
-            let columnWidth = contentWidth / CGFloat(numberOfColumns)
-            let columnRow = (collectionView!.bounds.height / CGFloat(numberOfRows)) - cellPadding * CGFloat(numberOfRows)
             var xOffset = [CGFloat]()
             for column in 0..<numberOfColumns {
                 xOffset.append(CGFloat(column) * columnWidth)
             }
             var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
             
-            // fill the collection view
-            var column: Int
-            let totalColumns = delegate.maxRow()
-            var columnsFill: Int
+            //
+            var indexPathSection = -1
+            var indexPathItem = 0
             var yOffsetMiniumForNewRow: CGFloat = 0
-            
-            for section in 0..<collectionView!.numberOfSections {
-                column = 0
-                columnsFill = 0
-                yOffsetMiniumForNewRow += columnRow + cellPadding * 2
+            for i in delegate.gridConfiguration.parseSlotStep {
                 
-                if collectionView!.numberOfItems(inSection: section) > 0 {
-                    // get the first column with free space
-                    while yOffset[columnsFill] > CGFloat(Int(columnRow) * (section + 1)) {
-                        columnsFill += 1
-                    }
-                    column = columnsFill
-                } else {
-                    // if the row don't have a cell
-                    columnsFill = totalColumns
-                }
-                
-                //
-                for item in 0..<collectionView!.numberOfItems(inSection: section) {
-                    let indexPath = IndexPath(item: item, section: section)
+                switch i {
+                    
+                case .cell(let row, let column):
+                    indexPathSection += 1
                     
                     // set size of cell
-                    let slotSize = delegate.cellSlotSize(section: section, row: item)
+                    let slotSize = delegate.gridConfiguration.slots.slotSizeAt(section: row, item: indexPathSection)
                     let slotWidth = slotSize.width
                     let slotHeight = slotSize.height
                     
@@ -97,40 +76,29 @@ public class GridLayout: UICollectionViewLayout {
                         height += CGFloat(slotHeight) * cellPadding
                     }
                     
-                    //
-                    columnsFill += slotWidth
-                    
-                    // checar se tem espaço nessa coluna; se não tiver, ir para o próximo espaço vago
-                    while yOffset[column] > CGFloat(Int(columnRow) * (section + 1)) {
-                        column += 1
-                        columnsFill += 1
-                        if column == numberOfColumns {
-                            print("[WARNING GridLayout] Célula de \(section):\(item) ultrapassou os limites!")
-                        }
-                    }
-                    
                     // desenhar o frame da célula e adicioná-la ao cache
                     let frame = CGRect(x: xOffset[column], y: yOffset[column], width: cellWidth, height: height)
                     let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
                     
+                    let indexPath = IndexPath(item: indexPathSection, section: indexPathItem)
                     let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                     attributes.frame = insetFrame
                     cache.append(attributes)
                     
-                    // atualizar yOffset e contentHeight
-                    contentHeight = max(contentHeight, frame.maxY)
-                    
+                    //
                     for i in 0..<slotWidth {
                         yOffset[column + i] = yOffset[column + i] + height + cellPadding
                     }
-                    column += slotWidth
+                    
+                case .newRow():
+                    // update yOffset of slots that not receive a cell
+                    yOffsetMiniumForNewRow += columnRow + cellPadding * 2
+                    yOffset = yOffset.map { max(yOffsetMiniumForNewRow, $0) }
+                    
+                    //
+                    indexPathSection = -1
+                    indexPathItem += 1
                 }
-                
-                // update yOffset of slots that not receive a cell
-                yOffset = yOffset[0..<columnsFill] +
-                          yOffset[columnsFill..<yOffset.count].map {
-                              max(yOffsetMiniumForNewRow, $0)
-                          }
             }
         }
     }

@@ -14,8 +14,9 @@ class CellCharacter: UICollectionViewCell, SlotableCell {
     @IBOutlet weak var image: UIImageView!
     static let slotWidth = 1
     static let slotHeight = 1
+    var slotParams: [String : Any] = [:]
     
-    func load(params: [String: Any]) {
+    func load() {
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = backgroundView!.bounds
@@ -23,7 +24,7 @@ class CellCharacter: UICollectionViewCell, SlotableCell {
         backgroundView!.addSubview(blurEffectView)
         
         //
-        let paramRace = params["race"] as? String
+        let paramRace = slotParams["race"] as? String
         
         switch paramRace { // imagens from the amazing open source game Battle for Wesnoth
         case "undead"?:

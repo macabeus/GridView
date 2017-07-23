@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        containerGrid!.gridConfiguration = [
+        containerGrid!.gridConfiguration = GridConfiguration.create(slots: Slots(slots: [
             [Slot(cell: CellSalmon.self, params: [:])],
             [Slot(cell: CellSky.self, params: [:]), Slot(cell: CellSky.self, params: [:])]
-        ]
+        ]))
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -39,7 +39,7 @@ extension ViewController: GridViewDelegate {
         return [CellSalmon.self, CellSky.self]
     }
     
-    func setup(cell: UICollectionViewCell, params: [String: Any]) {
-        cell.layer.cornerRadius = 10
+    func setup(cell: SlotableCell) {
+        (cell as? UICollectionViewCell)?.layer.cornerRadius = 10
     }
 }

@@ -13,6 +13,10 @@
 		892FDF5D1EB38E9100B1A333 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */; };
 		892FDF5F1EB38F8700B1A333 /* GridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5E1EB38F8700B1A333 /* GridController.swift */; };
 		892FDF601EB38F9300B1A333 /* GridController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FDF5E1EB38F8700B1A333 /* GridController.swift */; };
+		89A764DC1F246EE0000F764C /* GridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A764DB1F246EE0000F764C /* GridConfiguration.swift */; };
+		89A764DD1F246EF6000F764C /* GridConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A764DB1F246EE0000F764C /* GridConfiguration.swift */; };
+		89A764DF1F246F09000F764C /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A764DE1F246F09000F764C /* Slot.swift */; };
+		89A764E01F246F0E000F764C /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A764DE1F246F09000F764C /* Slot.swift */; };
 		89D4A77A1EB6EA4E0006E05D /* GridView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 89D4A7791EB6EA4E0006E05D /* GridView.podspec */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +35,8 @@
 		892FDF521EB23F7E00B1A333 /* GridView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GridView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		892FDF5E1EB38F8700B1A333 /* GridController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridController.swift; sourceTree = "<group>"; };
+		89A764DB1F246EE0000F764C /* GridConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridConfiguration.swift; sourceTree = "<group>"; };
+		89A764DE1F246F09000F764C /* Slot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slot.swift; sourceTree = "<group>"; };
 		89D4A7791EB6EA4E0006E05D /* GridView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GridView.podspec; path = ../GridView.podspec; sourceTree = "<group>"; };
 		9484A8A48975014F5D00AAF2 /* Pods-GridViewtvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridViewtvOS.release.xcconfig"; path = "../Pods/Target Support Files/Pods-GridViewtvOS/Pods-GridViewtvOS.release.xcconfig"; sourceTree = "<group>"; };
 		9C34590FB0748DC9CD597B1A /* Pods_GridView_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GridView_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +106,8 @@
 				892FDE831EB214E000B1A333 /* GridView.h */,
 				892FDE841EB214E000B1A333 /* Info.plist */,
 				892FDF5E1EB38F8700B1A333 /* GridController.swift */,
+				89A764DB1F246EE0000F764C /* GridConfiguration.swift */,
+				89A764DE1F246F09000F764C /* Slot.swift */,
 				892FDF5B1EB38E3C00B1A333 /* GridLayout.swift */,
 			);
 			path = GridView;
@@ -302,8 +310,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89A764DC1F246EE0000F764C /* GridConfiguration.swift in Sources */,
 				892FDF5F1EB38F8700B1A333 /* GridController.swift in Sources */,
 				892FDF5C1EB38E3C00B1A333 /* GridLayout.swift in Sources */,
+				89A764DF1F246F09000F764C /* Slot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,8 +321,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89A764DD1F246EF6000F764C /* GridConfiguration.swift in Sources */,
 				892FDF601EB38F9300B1A333 /* GridController.swift in Sources */,
 				892FDF5D1EB38E9100B1A333 /* GridLayout.swift in Sources */,
+				89A764E01F246F0E000F764C /* Slot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

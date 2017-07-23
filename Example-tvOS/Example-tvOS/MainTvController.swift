@@ -20,11 +20,12 @@ class MainTvController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.4756349325, green: 0.4756467342, blue: 0.4756404161, alpha: 1)
         
         // set the cells to show in grid 📌
-        containerGrid!.gridConfiguration = [
+        containerGrid!.gridConfiguration = GridConfiguration.create(slots: Slots(slots: [
             [Slot(cell: CellMap.self, params: [:]), Slot(cell: CellChart.self, params: [:])],
             [Slot(cell: CellLogs.self, params: [:])],
             [Slot(cell: CellCharacter.self, params: ["race": "troll"]), Slot(cell: CellCharacter.self, params: ["race": "elves"]), Slot(cell: CellCharacter.self, params: ["race": "undead"]), Slot(cell: CellCharacter.self, params: ["race": "merfolk"])]
-        ]
+            ])
+        )
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,7 +45,7 @@ extension MainTvController: GridViewDelegate {
         // if do you want list all classes that subscreber the SlotableCell protocol, you can read use this gist: https://gist.github.com/brunomacabeusbr/eea343bb9119b96eed3393e41dcda0c9 💜
     }
     
-    func setup(cell: UICollectionViewCell, params: [String: Any]) {
+    func setup(cell: SlotableCell) {
         // this delegate is called in "collectionView(_:cellForItemAt)" from GridViewController
         // it's useful when we need to setup many cells with same code 🍡
         
@@ -54,6 +55,6 @@ extension MainTvController: GridViewDelegate {
         }
         
         // for example, sey layout
-        cell.layer.cornerRadius = 10
+        (cell as? UICollectionViewCell)?.layer.cornerRadius = 10
     }
 }

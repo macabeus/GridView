@@ -14,8 +14,9 @@ class CellSky: UICollectionViewCell, SlotableCell {
     static let slotWidth = 1
     static let slotHeight = 1
     static let myNib = UINib(nibName: "CellSky", bundle: nil)
+    var slotParams: [String : Any] = [:]
     
-    func load(params: [String: Any]) {
+    func load() {
         
     }
 }

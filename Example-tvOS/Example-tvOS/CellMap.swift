@@ -16,8 +16,9 @@ class CellMap: UICollectionViewCell, SlotableCell {
     @IBOutlet weak var image: UIImageView!
     static let slotWidth = 2 // size of cell in grid
     static let slotHeight = 2 // size of cell in grid
+    var slotParams: [String : Any] = [:]
     
-    func load(params: [String: Any]) {
+    func load() {
         // this method if called when a cell is created in grid
         // you can see a example more complete in CellCharacter 🏃
     }
