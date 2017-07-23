@@ -44,8 +44,9 @@ class CellLogs: UICollectionViewCell, SlotableCell {
  
     static let slotWidth = 1 // size of cell in grid 📏
     static let slotHeight = 1 // size of cell in grid 📐
+    var slotParams: [String : Any] = [:]
 
-    func load(params: [String: Any]) { 
+    func load() { 
         // this method if called when a cell is created in grid 🔨
     }
 }
@@ -69,7 +70,7 @@ extension ViewController: GridViewDelegate {
         // if do you want list all classes that subscreber the SlotableCell protocol, you can read use this gist: https://gist.github.com/brunomacabeusbr/eea343bb9119b96eed3393e41dcda0c9 💜
     }
     
-    func setup(cell: UICollectionViewCell, params: [String: Any]) {
+    func setup(cell: SlotableCell) {
         // this delegate is called in "collectionView(_:cellForItemAt)" from GridViewController
         // it's useful when we need to setup many cells with same code 🍡
         
@@ -79,7 +80,7 @@ extension ViewController: GridViewDelegate {
         }
         
         // layout
-        cell.layer.cornerRadius = 10
+        (cell as? UICollectionViewCell)?.layer.cornerRadius = 10
     }
 }
 ```
@@ -98,11 +99,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // set the cells to show in grid 📌
-        containerGrid!.gridConfiguration = [
+        containerGrid!.gridConfiguration = GridConfiguration.create(slots: Slots(slots: [
             [Slot(cell: CellMap.self, params: [:]), Slot(cell: CellChart.self, params: [:])],
             [Slot(cell: CellLogs.self, params: [:])],
             [Slot(cell: CellCharacter.self, params: ["race": "troll"]), Slot(cell: CellCharacter.self, params: ["race": "elves"]), Slot(cell: CellCharacter.self, params: ["race": "undead"]), Slot(cell: CellCharacter.self, params: ["race": "merfolk"])]
-        ]
+            ])
+        )
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -125,25 +127,29 @@ When you create a `Slot`, you set a cell of this slot, and also **params** of th
 Slot(cell: CellCharacter.self, params: ["race": "undead"])
 ```
 
-The parameter is passed in two moments:
-* on `GridViewDelegate`, in method `setup(cell: UICollectionViewCell, params: [String: Any])`
-* on `SlotableCell`, in method `load(params: [String: Any])`
+The value of `params` is set in attribute `slotParams` of `SlotableCell`.
 
 Example of use:
 
 ```swift
-func load(params: [String: Any]) {
-    let paramRace = params["race"] as? String
+class CellCharacter: UICollectionViewCell, SlotableCell {
     
-    switch paramRace { // imagens from the amazing open source game Battle for Wesnoth
-    case "undead"?:
-        image.image = UIImage(named: "undead")!
-    case "elves"?:
-        image.image = UIImage(named: "elves")!
-    case "troll"?:
-        image.image = UIImage(named: "troll")!
-    default:
-        print("invalid race: \(paramRace ?? "nil")")
+    ...
+    var slotParams: [String : Any] = [:]
+
+    func load() {
+        let paramRace = slotParams["race"] as? String
+    
+        switch paramRace {
+        case "undead"?:
+            image.image = UIImage(named: "undead")!
+        case "elves"?:
+            image.image = UIImage(named: "elves")!
+        case "troll"?:
+            image.image = UIImage(named: "troll")!
+        default:
+            print("invalid race: \(paramRace ?? "nil")")
+        }
     }
 }
 ```
